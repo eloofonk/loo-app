@@ -449,6 +449,7 @@ input,textarea,select{font-family:var(--font)}
     </select>
     <button class="tb" id="btn-todo" onclick="toggleTodo()">✱To do</button>
     <button class="tb" onclick="toggleClaude()">✦ Claude</button>
+    <button class="tb" onclick="toggleSettings()" title="Configuración">⚙</button>
     <button class="tb" onclick="toggleSb()">☰</button>
   </div>
 </div>
@@ -459,7 +460,7 @@ input,textarea,select{font-family:var(--font)}
   <div class="rail" id="rail">
     <button class="rb on" id="rb-notes" onclick="setPanel('notes')" data-tip="Notas">📝</button>
     <button class="rb" id="rb-folders" onclick="setPanel('folders')" data-tip="Carpetas">📁</button>
-    <button class="rb" id="rb-tags" onclick="setPanel('tags')" data-tip="Etiquetas" style="color:#f59e0b">🏷</button>
+    <button class="rb" id="rb-tags" onclick="setPanel('tags')" data-tip="Etiquetas" style="color:#f59e0b;font-size:13px;font-weight:700">#</button>
     <button class="rb" id="rb-supertags" onclick="setPanel('supertags')" data-tip="Supertags" style="color:var(--accent);font-weight:900;font-size:14px">✱</button>
     <button class="rb" id="rb-calendar" onclick="setPanel('calendar')" data-tip="Calendario">📅</button>
     <div class="rb-sep"></div>
@@ -772,6 +773,81 @@ input,textarea,select{font-family:var(--font)}
 
   </div><!-- /editor-area -->
 </div><!-- /workspace -->
+
+<!-- SETTINGS PANEL -->
+<div id="settings-panel" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:1500;align-items:center;justify-content:center" onclick="if(event.target===this)toggleSettings()">
+  <div style="background:var(--surface);border-radius:14px;width:420px;max-height:85vh;overflow-y:auto;box-shadow:var(--shadow-lg);animation:fadeUp .15s ease">
+    <!-- Header -->
+    <div style="padding:18px 20px 14px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between">
+      <div style="font-size:15px;font-weight:700">⚙ Configuración</div>
+      <button onclick="toggleSettings()" style="border:none;background:none;font-size:18px;color:var(--t3);cursor:pointer;line-height:1">✕</button>
+    </div>
+    <!-- Body -->
+    <div style="padding:16px 20px;display:flex;flex-direction:column;gap:20px">
+
+      <!-- Apariencia -->
+      <div>
+        <div style="font-size:10px;font-weight:700;color:var(--t3);text-transform:uppercase;letter-spacing:.8px;margin-bottom:10px">Apariencia</div>
+        <div style="display:flex;flex-direction:column;gap:10px">
+          <div style="display:flex;align-items:center;justify-content:space-between">
+            <span style="font-size:13px;color:var(--t2)">Fuente del editor</span>
+            <select class="font-sel" onchange="setEditorFont(this.value)" id="settings-font">
+              <option value="Inter">Inter</option>
+              <option value="Georgia">Georgia (serif)</option>
+              <option value="'Courier New'">Courier New (mono)</option>
+              <option value="'Times New Roman'">Times New Roman</option>
+              <option value="system-ui">Sistema</option>
+            </select>
+          </div>
+          <div style="display:flex;align-items:center;justify-content:space-between">
+            <span style="font-size:13px;color:var(--t2)">Tamaño de fuente</span>
+            <select class="font-sel" onchange="setFontSize(this.value)" id="settings-size">
+              <option value="13px">Pequeño</option>
+              <option value="14px" selected>Normal</option>
+              <option value="16px">Grande</option>
+              <option value="18px">Muy grande</option>
+            </select>
+          </div>
+          <div style="display:flex;align-items:center;justify-content:space-between">
+            <span style="font-size:13px;color:var(--t2)">Ancho del editor</span>
+            <select class="font-sel" onchange="setEditorWidth(this.value)" id="settings-width">
+              <option value="100%">Completo</option>
+              <option value="720px">Cómodo (720px)</option>
+              <option value="600px">Estrecho (600px)</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <!-- Cuenta -->
+      <div>
+        <div style="font-size:10px;font-weight:700;color:var(--t3);text-transform:uppercase;letter-spacing:.8px;margin-bottom:10px">Cuenta</div>
+        <div style="background:var(--s3);border-radius:8px;padding:12px 14px;display:flex;align-items:center;justify-content:space-between">
+          <div>
+            <div style="font-size:13px;font-weight:500" id="settings-email">—</div>
+            <div style="font-size:11px;color:var(--t3);margin-top:2px">Sincronizado en la nube ☁</div>
+          </div>
+          <button onclick="signOut()" style="padding:6px 12px;border:1px solid var(--border);border-radius:6px;background:var(--surface);font-size:12px;font-weight:500;cursor:pointer;color:var(--t2)">Cerrar sesión</button>
+        </div>
+      </div>
+
+      <!-- Datos -->
+      <div>
+        <div style="font-size:10px;font-weight:700;color:var(--t3);text-transform:uppercase;letter-spacing:.8px;margin-bottom:10px">Datos</div>
+        <div style="display:flex;gap:8px">
+          <button onclick="exportAllNotes()" style="flex:1;padding:8px;border:1px solid var(--border);border-radius:7px;background:var(--surface);font-size:12px;font-weight:500;cursor:pointer;color:var(--t2);transition:all .1s" onmouseover="this.style.borderColor='var(--accent)'" onmouseout="this.style.borderColor='var(--border)'">📤 Exportar todas las notas</button>
+          <button onclick="importAllNotes()" style="flex:1;padding:8px;border:1px solid var(--border);border-radius:7px;background:var(--surface);font-size:12px;font-weight:500;cursor:pointer;color:var(--t2);transition:all .1s" onmouseover="this.style.borderColor='var(--accent)'" onmouseout="this.style.borderColor='var(--border)'">📥 Importar backup</button>
+        </div>
+      </div>
+
+      <!-- Acerca de -->
+      <div style="text-align:center;padding:8px 0">
+        <div style="font-size:18px;font-weight:700;letter-spacing:-.5px;margin-bottom:4px">✱<span style="color:var(--accent)">loo.</span></div>
+        <div style="font-size:11px;color:var(--t3)">v2.0 · Diseñado por Eduardo Loo · 2025</div>
+      </div>
+    </div>
+  </div>
+</div>
 
 <!-- SIDEBAR CONTEXT MENU -->
 <div class="sb-ctx" id="sb-ctx">
@@ -1743,36 +1819,49 @@ async function insertFileCard(file, dataUrl) {
   const isImg   = /^(jpg|jpeg|png|gif|webp|svg)$/.test(ext);
   const isVid   = /^(mp4|webm|mov|avi|mkv)$/.test(ext);
   const isAudio = /^(mp3|wav|ogg|m4a|aac|flac)$/.test(ext);
+  const isPDF   = ext === 'pdf';
 
   await idbPut({ id:fileId, name:file.name, ext, size:file.size, dataUrl });
 
   let cardHtml;
   if(isImg) {
-    cardHtml = `<div class="fcard" data-fileid="${fileId}" onclick="openSV('${fileId}')" oncontextmenu="showBlockCtxMenu(event,'📎 Imagen',this);event.preventDefault()">
-      <img class="fcard-img" src="${dataUrl}" alt="${hesc(file.name)}">
+    cardHtml = `<div class="fcard" data-fileid="${fileId}" onclick="openSV('${fileId}')" oncontextmenu="showBlockCtxMenu(event,'🖼 Imagen',this);event.preventDefault()">
+      <img class="fcard-img" src="${dataUrl}" alt="${hesc(file.name)}" style="max-width:100%;max-height:120px;border-radius:5px;object-fit:cover">
       <div class="fcard-info">
         <div class="fcard-name">${hesc(file.name)}</div>
-        <div class="fcard-meta">${fmtSize(file.size)}</div>
+        <div class="fcard-meta">${fmtSize(file.size)} · clic para ampliar</div>
       </div>
     </div>`;
   } else if(isVid) {
-    cardHtml = `<div class="fcard" data-fileid="${fileId}" oncontextmenu="showBlockCtxMenu(event,'🎬 Video',this);event.preventDefault()">
-      <video class="fcard-video" src="${dataUrl}" controls style="max-width:100%;border-radius:6px;margin:4px 0"></video>
-      <div class="fcard-info" style="display:none">
-        <div class="fcard-name">${hesc(file.name)}</div>
-      </div>
+    cardHtml = `<div class="fcard" data-fileid="${fileId}" oncontextmenu="showBlockCtxMenu(event,'🎬 Video',this);event.preventDefault()" style="flex-direction:column;align-items:flex-start">
+      <video src="${dataUrl}" controls style="max-width:100%;border-radius:6px;margin-bottom:6px;max-height:200px"></video>
+      <div class="fcard-name" style="font-size:11px;color:var(--t3)">${hesc(file.name)} · ${fmtSize(file.size)}</div>
     </div>`;
   } else if(isAudio) {
-    cardHtml = `<div class="fcard" data-fileid="${fileId}" oncontextmenu="showBlockCtxMenu(event,'🎵 Audio',this);event.preventDefault()">
-      <span class="fcard-icon">${icon}</span>
-      <div class="fcard-info">
-        <div class="fcard-name">${hesc(file.name)}</div>
-        <audio src="${dataUrl}" controls style="width:100%;margin-top:4px"></audio>
+    cardHtml = `<div class="fcard" data-fileid="${fileId}" oncontextmenu="showBlockCtxMenu(event,'🎵 Audio',this);event.preventDefault()" style="flex-direction:column;align-items:flex-start">
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;width:100%">
+        <span style="font-size:20px">🎵</span>
+        <div>
+          <div class="fcard-name">${hesc(file.name)}</div>
+          <div class="fcard-meta">${fmtSize(file.size)}</div>
+        </div>
+      </div>
+      <audio src="${dataUrl}" controls style="width:100%"></audio>
+    </div>`;
+  } else if(isPDF) {
+    cardHtml = `<div class="fcard" data-fileid="${fileId}" onclick="openSV('${fileId}')" oncontextmenu="showBlockCtxMenu(event,'📄 PDF',this);event.preventDefault()" style="flex-direction:column;align-items:flex-start;padding:0;overflow:hidden">
+      <iframe src="${dataUrl}" style="width:100%;height:280px;border:none;border-radius:6px 6px 0 0;pointer-events:none" scrolling="no"></iframe>
+      <div style="display:flex;align-items:center;gap:8px;padding:8px 12px;width:100%;background:var(--s3);border-radius:0 0 6px 6px">
+        <span style="font-size:18px">📄</span>
+        <div style="flex:1;min-width:0">
+          <div class="fcard-name">${hesc(file.name)}</div>
+          <div class="fcard-meta">${fmtSize(file.size)} · clic para ver completo</div>
+        </div>
       </div>
     </div>`;
   } else {
     cardHtml = `<div class="fcard" data-fileid="${fileId}" onclick="openSV('${fileId}')" oncontextmenu="showBlockCtxMenu(event,'📎 Archivo',this);event.preventDefault()">
-      <span class="fcard-icon">${icon}</span>
+      <span class="fcard-icon" style="font-size:24px">${icon}</span>
       <div class="fcard-info">
         <div class="fcard-name">${hesc(file.name)}</div>
         <div class="fcard-meta">${fmtSize(file.size)}</div>
@@ -2797,7 +2886,7 @@ async function initApp() {
 
   renderSB();
   if(notes.length) openNote(notes[0].id);
-  applyEditorFont();
+  applyAllEditorPrefs();
 }
 
 // ── STARTUP: check existing session ──
@@ -2830,6 +2919,97 @@ async function initApp() {
     if(event === 'SIGNED_OUT') { _currentUser=null; }
   });
 })();
+// ── SETTINGS ──
+function toggleSettings() {
+  const panel = document.getElementById('settings-panel');
+  const isOpen = panel.style.display === 'flex';
+  panel.style.display = isOpen ? 'none' : 'flex';
+  if(!isOpen) {
+    // Sync current values
+    const curFont = localStorage.getItem('loo_font') || 'Inter';
+    const curSize = localStorage.getItem('loo_fontsize') || '14px';
+    const curWidth = localStorage.getItem('loo_editorwidth') || '100%';
+    const sf = document.getElementById('settings-font');
+    const ss = document.getElementById('settings-size');
+    const sw = document.getElementById('settings-width');
+    if(sf) [...sf.options].forEach(o => o.selected = o.value === curFont);
+    if(ss) [...ss.options].forEach(o => o.selected = o.value === curSize);
+    if(sw) [...sw.options].forEach(o => o.selected = o.value === curWidth);
+    const emailEl = document.getElementById('settings-email');
+    if(emailEl && _currentUser) emailEl.textContent = _currentUser.email || '—';
+  }
+}
+
+function setFontSize(size) {
+  document.getElementById('le').style.fontSize = size;
+  localStorage.setItem('loo_fontsize', size);
+}
+
+function setEditorWidth(width) {
+  document.getElementById('le').style.maxWidth = width;
+  document.getElementById('le').style.margin = width === '100%' ? '' : '0 auto';
+  localStorage.setItem('loo_editorwidth', width);
+}
+
+function applyAllEditorPrefs() {
+  applyEditorFont();
+  const size = localStorage.getItem('loo_fontsize');
+  if(size) document.getElementById('le').style.fontSize = size;
+  const width = localStorage.getItem('loo_editorwidth');
+  if(width && width !== '100%') {
+    document.getElementById('le').style.maxWidth = width;
+    document.getElementById('le').style.margin = '0 auto';
+  }
+}
+
+function signOut() {
+  if(!confirm('¿Cerrar sesión?')) return;
+  getSB().auth.signOut().then(() => { _currentUser = null; location.reload(); });
+}
+
+function exportAllNotes() {
+  const data = { notes, folders, exported: new Date().toISOString(), version: '2.0' };
+  const blob = new Blob([JSON.stringify(data, null, 2)], {type:'application/json'});
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'loo-backup-' + D() + '.json';
+  a.click();
+  toast('✓ Backup descargado');
+}
+
+function importAllNotes() {
+  const input = document.createElement('input');
+  input.type = 'file'; input.accept = '.json';
+  input.onchange = async e => {
+    const file = e.target.files[0]; if(!file) return;
+    try {
+      const text = await file.text();
+      const data = JSON.parse(text);
+      if(!data.notes) { toast('❌ Archivo inválido'); return; }
+      if(!confirm(`¿Importar ${data.notes.length} notas? Esto NO borrará tus notas actuales.`)) return;
+      // Merge: add notes that don't exist
+      let added = 0;
+      for(const n of data.notes) {
+        if(!notes.find(x => x.id === n.id)) {
+          notes.unshift(n);
+          await saveNote(n);
+          added++;
+        }
+      }
+      for(const f of (data.folders||[])) {
+        if(!folders.find(x => x.id === f.id)) {
+          folders.push(f);
+          await saveFolder(f);
+        }
+      }
+      save(); renderSB();
+      toast(`✓ ${added} notas importadas`);
+      toggleSettings();
+    } catch(err) { toast('❌ Error al importar: ' + err.message); }
+  };
+  input.click();
+}
+
 // ── RAIL TOOLTIPS ──
 document.getElementById('rail').addEventListener('mouseover', e => {
   const btn = e.target.closest('[data-tip]');
