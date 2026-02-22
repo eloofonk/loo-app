@@ -221,12 +221,38 @@ input,textarea,select{font-family:var(--font)}
 .fcard-img{max-width:100%;max-height:80px;border-radius:4px;object-fit:cover}
 .le img{max-width:100%;border-radius:8px;cursor:pointer;display:block;margin:6px 0}
 .le img.selected{outline:2px solid var(--accent);outline-offset:2px}
-.img-wrap{position:relative;display:inline-block;margin:6px 0;max-width:100%}
-.img-wrap img{display:block;border-radius:8px}
-.img-resize-handle{position:absolute;bottom:4px;right:4px;width:14px;height:14px;background:var(--accent);border-radius:3px;cursor:se-resize;opacity:0;transition:opacity .15s}
-.img-wrap:hover .img-resize-handle{opacity:.8}
-
-/* ── COMMENTS ── */
+/* ── IMAGES ── */
+.le img{max-width:100%;border-radius:6px;display:block;margin:4px 0}
+.le img.selected{outline:2px solid var(--accent);outline-offset:2px}
+.img-wrap{
+  position:relative;display:inline-block;margin:4px 2px;
+  vertical-align:top;max-width:100%;
+  cursor:move;user-select:none;
+}
+.img-wrap.selected-wrap{outline:2px solid var(--accent);outline-offset:1px;border-radius:6px}
+.img-wrap img{display:block;border-radius:6px;pointer-events:none;width:100%}
+.img-resize-handle{
+  position:absolute;bottom:-4px;right:-4px;
+  width:12px;height:12px;
+  background:var(--accent);border:2px solid #fff;
+  border-radius:50%;cursor:se-resize;
+  opacity:0;transition:opacity .15s;z-index:2;
+}
+.img-wrap.selected-wrap .img-resize-handle{opacity:1}
+.img-wrap:hover .img-resize-handle{opacity:.7}
+.img-align-bar{
+  display:none;position:absolute;top:-30px;left:0;
+  background:rgba(29,29,31,.88);border-radius:6px;
+  padding:3px 6px;gap:2px;align-items:center;
+  z-index:10;
+}
+.img-wrap.selected-wrap .img-align-bar{display:flex}
+.img-ab-btn{
+  color:#fff;font-size:11px;padding:2px 6px;
+  border-radius:4px;cursor:pointer;border:none;
+  background:transparent;font-family:var(--font);
+}
+.img-ab-btn:hover{background:rgba(255,255,255,.2)}
 .note-comment{background:rgba(255,193,7,.15);border-bottom:2px solid #f59e0b;cursor:pointer;position:relative;border-radius:2px}
 .note-comment:hover::after{content:attr(data-comment);position:absolute;bottom:calc(100% + 6px);left:0;background:rgba(29,29,31,.92);color:#fff;padding:7px 12px;border-radius:8px;font-size:11px;white-space:pre-wrap;max-width:280px;line-height:1.5;z-index:200;box-shadow:0 4px 16px rgba(0,0,0,.2);font-family:var(--font);pointer-events:none}
 .comments-panel{position:fixed;right:0;top:44px;bottom:0;width:280px;background:var(--surface);border-left:1px solid var(--border);z-index:150;display:flex;flex-direction:column;transform:translateX(100%);transition:transform .25s cubic-bezier(.4,0,.2,1);box-shadow:-4px 0 24px rgba(0,0,0,.08)}
@@ -490,9 +516,9 @@ input,textarea,select{font-family:var(--font)}
   <div class="logo">✱<span>loo.</span></div>
   <div class="tb-sep"></div>
   <button class="tb" onclick="openNewNote()">+ Nueva nota</button>
-  <button class="tb" onclick="openNewFolder()">📁 Carpeta</button>
+  <button class="tb" onclick="openNewFolder()" style="font-size:12px">+ Carpeta</button>
   <div class="tb-search-wrap">
-    <span class="tb-search-ico">🔍</span>
+    <span class="tb-search-ico" style="font-family:system-ui">⌕</span>
     <input class="tb-search" id="tb-search" placeholder="Buscar notas…" oninput="filterNotes(this.value)" onfocus="if(sbHidden)toggleSb()">
   </div>
   <div class="tb-r">
@@ -508,13 +534,13 @@ input,textarea,select{font-family:var(--font)}
 
   <!-- RAIL -->
   <div class="rail" id="rail">
-    <button class="rb on" id="rb-notes" onclick="setPanel('notes')" data-tip="Notas">📝</button>
-    <button class="rb" id="rb-folders" onclick="setPanel('folders')" data-tip="Carpetas">📁</button>
-    <button class="rb" id="rb-tags" onclick="setPanel('tags')" data-tip="Etiquetas" style="color:#f59e0b;font-size:13px;font-weight:700">#</button>
-    <button class="rb" id="rb-supertags" onclick="setPanel('supertags')" data-tip="Supertags" style="color:var(--accent);font-weight:900;font-size:14px">✱</button>
-    <button class="rb" id="rb-calendar" onclick="setPanel('calendar')" data-tip="Calendario">📅</button>
+    <button class="rb on" id="rb-notes" onclick="setPanel('notes')" title="Notas" style="font-size:11px;font-weight:700;letter-spacing:-.3px">Notas</button>
+    <button class="rb" id="rb-folders" onclick="setPanel('folders')" title="Carpetas" style="font-size:11px;font-weight:700;letter-spacing:-.3px">Carp.</button>
+    <button class="rb" id="rb-tags" onclick="setPanel('tags')" title="Etiquetas" style="color:#f59e0b;font-size:13px;font-weight:700">#</button>
+    <button class="rb" id="rb-supertags" onclick="setPanel('supertags')" title="Supertags" style="color:var(--accent);font-weight:900;font-size:14px">✱</button>
+    <button class="rb" id="rb-calendar" onclick="setPanel('calendar')" title="Calendario" style="font-size:11px;font-weight:700">Cal.</button>
     <div class="rb-sep"></div>
-    <button class="rb" onclick="importFrom('word')" data-tip="Importar">📥</button>
+    <button class="rb" onclick="importFrom('word')" title="Importar" style="font-size:11px;font-weight:600">Imp.</button>
   </div>
   <!-- RAIL TOOLTIP -->
   <div id="rail-tip" style="position:fixed;background:#1a1a18;color:#fff;padding:4px 10px;border-radius:5px;font-size:11px;font-weight:500;white-space:nowrap;pointer-events:none;z-index:9999;display:none;box-shadow:0 2px 8px rgba(0,0,0,.25)"></div>
@@ -1465,30 +1491,11 @@ function onInput() {
 
 function onMU() {
   saveSelection();
-  setTimeout(() => {
-    const sel = window.getSelection();
-    if(!sel || sel.isCollapsed || !sel.toString().trim()) { closeCtx(); return; }
-    const range = sel.getRangeAt(0);
-    const rect  = range.getBoundingClientRect();
-    const menu  = document.getElementById('ctx');
-    menu.style.left = Math.min(rect.left, window.innerWidth-260) + 'px';
-    menu.style.top  = (rect.top - 44 + window.scrollY) + 'px';
-    menu.classList.add('open');
-  }, 10);
+  // No floating toolbar on selection — use right-click or ribbon
 }
 
 function onMUB() {
-  setTimeout(() => {
-    const sel = window.getSelection();
-    if(!sel || sel.isCollapsed) return;
-    const r = sel.getRangeAt(0).getBoundingClientRect();
-    const ctx = document.getElementById('ctx');
-    if(ctx) {
-      ctx.style.left = Math.min(r.left, window.innerWidth-260)+'px';
-      ctx.style.top  = (r.top-44+window.scrollY)+'px';
-      ctx.classList.add('open');
-    }
-  }, 10);
+  // No floating toolbar on pane B selection either
 }
 
 function onKD(e) {
@@ -2165,11 +2172,7 @@ async function insertFileCard(file, dataUrl) {
 
   let cardHtml;
   if(isImg) {
-    cardHtml = `<div class="img-wrap" contenteditable="false" data-fileid="${fileId}" style="display:inline-block;max-width:100%">
-      <img src="${dataUrl}" alt="${hesc(file.name)}" style="width:100%;max-width:560px;border-radius:8px;display:block;cursor:pointer" onclick="openSV('${fileId}')" oncontextmenu="showBlockCtxMenu(event,'🖼 Imagen',this.closest('.img-wrap'));event.preventDefault()">
-      <div class="img-resize-handle" onmousedown="startImgResize(event,this.parentElement)"></div>
-      <div style="font-size:11px;color:var(--t3);padding:4px 2px">${hesc(file.name)} · ${fmtSize(file.size)}</div>
-    </div>`;
+    cardHtml = buildImgWrapHtml(dataUrl, file.name, fileId, 480);
   } else if(isVid) {
     cardHtml = `<div class="fcard" data-fileid="${fileId}" oncontextmenu="showBlockCtxMenu(event,'🎬 Video',this);event.preventDefault()" style="flex-direction:column;align-items:flex-start">
       <video src="${dataUrl}" controls style="max-width:100%;border-radius:6px;margin-bottom:6px;max-height:200px"></video>
@@ -2208,9 +2211,8 @@ async function insertFileCard(file, dataUrl) {
   }
 
   if(isImg || isVid || isAudio) {
-    // Media goes inline in the note
-    const le = document.getElementById('le'); le.focus();
-    document.execCommand('insertHTML', false, cardHtml + '<p><br></p>');
+    // Media goes inline in the note at cursor position
+    insertHtmlAtCursor(cardHtml);
   } else {
     // Documents (PDF, Word, etc.) go to Resources panel
     const n = notes.find(x => x.id === activeId);
@@ -2272,6 +2274,7 @@ function insertMedia(type) {
   if(!activeId){ toast('Abre una nota primero'); return; }
   document.getElementById('media-'+type+'-input').click();
 }
+
 function onMediaInsert(input, type) {
   const file = input.files[0]; if(!file) return;
   input.value = '';
@@ -2279,25 +2282,57 @@ function onMediaInsert(input, type) {
   const reader = new FileReader();
   reader.onload = ev => {
     const src = ev.target.result;
-    const le = document.getElementById('le'); le.focus();
+    const uid = 'img_'+Date.now();
     let html = '';
     if(type==='image') {
-      html = `<div class="img-wrap" contenteditable="false" style="display:inline-block;max-width:100%">
-        <img src="${src}" alt="${hesc(file.name)}" style="width:100%;max-width:560px;border-radius:8px;display:block" onclick="selectImg(this)">
-        <div class="img-resize-handle" onmousedown="startImgResize(event,this.parentElement)"></div>
-      </div><p><br></p>`;
+      html = buildImgWrapHtml(src, file.name, uid, 480);
     } else if(type==='video') {
-      html = `<video src="${src}" controls style="max-width:100%;border-radius:6px;margin:4px 0"></video><p><br></p>`;
+      html = `<div contenteditable="false" style="margin:6px 0"><video src="${src}" controls style="max-width:100%;border-radius:6px;max-height:320px"></video></div>`;
     } else if(type==='audio') {
-      html = `<div style="background:var(--s3);border:1px solid var(--border);border-radius:8px;padding:10px 14px;margin:6px 0">
-        <div style="font-size:12px;font-weight:500;margin-bottom:6px;color:var(--t2)">🎵 ${hesc(file.name)}</div>
-        <audio src="${src}" controls style="width:100%"></audio>
-      </div><p><br></p>`;
+      html = `<div contenteditable="false" style="background:var(--s3);border:1px solid var(--border);border-radius:8px;padding:10px 14px;margin:6px 0"><div style="font-size:12px;font-weight:500;margin-bottom:6px;color:var(--t2)">&#9835; ${hesc(file.name)}</div><audio src="${src}" controls style="width:100%"></audio></div>`;
     }
-    document.execCommand('insertHTML', false, html);
-    schedSave(); toast('✓ Multimedia insertado');
+    insertHtmlAtCursor(html);
+    schedSave();
+    toast('✓ Insertado en la nota');
   };
   reader.readAsDataURL(file);
+}
+
+function buildImgWrapHtml(src, name, uid, width) {
+  const safeId = uid || ('img_'+Date.now());
+  const safeW = width || 480;
+  const safeName = (name||'').replace(/"/g,'&quot;');
+  return `<div class="img-wrap" contenteditable="false" id="${safeId}" style="width:${safeW}px;max-width:100%" draggable="true" ondragstart="imgDragStart(event,this)" ondragend="imgDragEnd(event)" onclick="selectImgWrap(this)"><div class="img-align-bar"><button class="img-ab-btn" onmousedown="event.preventDefault();imgAlign(this.closest('.img-wrap'),'left')" title="Izquierda">&#9664;</button><button class="img-ab-btn" onmousedown="event.preventDefault();imgAlign(this.closest('.img-wrap'),'center')" title="Centro">&#9632;</button><button class="img-ab-btn" onmousedown="event.preventDefault();imgAlign(this.closest('.img-wrap'),'right')" title="Derecha">&#9654;</button><button class="img-ab-btn" onmousedown="event.preventDefault();imgDelete(this.closest('.img-wrap'))" title="Eliminar" style="color:#ff6b6b">&#10005;</button></div><img src="${src}" alt="${safeName}" style="width:100%;border-radius:6px;display:block;pointer-events:none"><div class="img-resize-handle" onmousedown="startImgResize(event,this.closest('.img-wrap'))"></div></div>`;
+}
+
+function insertHtmlAtCursor(html) {
+  const le = document.getElementById('le');
+  le.focus();
+  const sel = window.getSelection();
+  if(sel && sel.rangeCount > 0) {
+    const range = sel.getRangeAt(0);
+    // Make sure we're inside the editor
+    if(!le.contains(range.commonAncestorContainer)) {
+      le.appendChild(document.createElement('p'));
+      const r = document.createRange();
+      r.selectNodeContents(le); r.collapse(false);
+      sel.removeAllRanges(); sel.addRange(r);
+    }
+    range.deleteContents();
+    const frag = range.createContextualFragment(html);
+    const lastNode = frag.lastChild;
+    range.insertNode(frag);
+    // Move cursor after inserted content
+    if(lastNode) {
+      const after = document.createRange();
+      after.setStartAfter(lastNode);
+      after.collapse(true);
+      sel.removeAllRanges();
+      sel.addRange(after);
+    }
+  } else {
+    document.execCommand('insertHTML', false, html);
+  }
 }
 
 // ═══════════════════════════════════════════════
@@ -3358,6 +3393,7 @@ async function initApp() {
   renderSB();
   if(notes.length) openNote(notes[0].id);
   applyAllEditorPrefs();
+  initImgDropOnEditor();
 }
 
 // ── STARTUP: check existing session ──
@@ -3391,26 +3427,137 @@ async function initApp() {
   });
 })();
 // ── IMAGE RESIZE ──
-function selectImg(img) {
-  document.querySelectorAll('#le img').forEach(i => i.classList.remove('selected'));
-  img.classList.add('selected');
+// ═══════════════════════════════════════════════
+// ── IMAGE INTERACTIONS ──
+// ═══════════════════════════════════════════════
+
+function selectImgWrap(wrap) {
+  // Deselect all others
+  document.querySelectorAll('.img-wrap').forEach(w => w.classList.remove('selected-wrap'));
+  wrap.classList.add('selected-wrap');
+  // Click outside to deselect
+  const deselect = (e) => {
+    if(!wrap.contains(e.target)) {
+      wrap.classList.remove('selected-wrap');
+      document.removeEventListener('click', deselect);
+    }
+  };
+  setTimeout(() => document.addEventListener('click', deselect), 10);
 }
+
+function selectImg(img) {
+  // Legacy support
+  const wrap = img.closest('.img-wrap');
+  if(wrap) selectImgWrap(wrap);
+}
+
+function imgDelete(wrap) {
+  if(wrap && wrap.isConnected) {
+    wrap.remove();
+    schedSave();
+    toast('Imagen eliminada');
+  }
+}
+
+function imgAlign(wrap, align) {
+  const le = document.getElementById('le');
+  if(align === 'center') {
+    wrap.style.display = 'block';
+    wrap.style.marginLeft = 'auto';
+    wrap.style.marginRight = 'auto';
+  } else if(align === 'right') {
+    wrap.style.display = 'block';
+    wrap.style.marginLeft = 'auto';
+    wrap.style.marginRight = '0';
+  } else {
+    wrap.style.display = 'block';
+    wrap.style.marginLeft = '0';
+    wrap.style.marginRight = 'auto';
+  }
+  schedSave();
+}
+
 function startImgResize(e, wrap) {
-  e.preventDefault(); e.stopPropagation();
+  e.preventDefault();
+  e.stopPropagation();
   const img = wrap.querySelector('img');
   const startX = e.clientX;
-  const startW = img.offsetWidth;
+  const startW = wrap.offsetWidth;
+  const le = document.getElementById('le');
+  const maxW = le.offsetWidth - 8;
+  document.body.style.cursor = 'se-resize';
   const onMove = ev => {
-    const newW = Math.max(80, Math.min(startW + ev.clientX - startX, wrap.parentElement.offsetWidth));
-    img.style.width = newW + 'px'; img.style.maxWidth = 'none';
+    const newW = Math.max(80, Math.min(startW + ev.clientX - startX, maxW));
+    wrap.style.width = newW + 'px';
   };
   const onUp = () => {
+    document.body.style.cursor = '';
     document.removeEventListener('mousemove', onMove);
     document.removeEventListener('mouseup', onUp);
     schedSave();
   };
   document.addEventListener('mousemove', onMove);
   document.addEventListener('mouseup', onUp);
+}
+
+// ── DRAG TO MOVE IMAGE ──
+let _imgDragSrc = null;
+let _imgDropMarker = null;
+
+function imgDragStart(e, wrap) {
+  _imgDragSrc = wrap;
+  e.dataTransfer.effectAllowed = 'move';
+  e.dataTransfer.setData('text/plain', wrap.id || '');
+  setTimeout(() => { wrap.style.opacity = '0.4'; }, 0);
+  // Create drop marker
+  _imgDropMarker = document.createElement('div');
+  _imgDropMarker.style.cssText = 'height:3px;background:var(--accent);border-radius:2px;margin:4px 0;pointer-events:none';
+  _imgDropMarker.id = '_img_drop_marker';
+}
+
+function imgDragEnd(e) {
+  if(_imgDragSrc) _imgDragSrc.style.opacity = '';
+  _imgDropMarker?.remove();
+  _imgDropMarker = null;
+  _imgDragSrc = null;
+}
+
+// Set up editor to accept image drops for reordering
+function initImgDropOnEditor() {
+  const le = document.getElementById('le');
+  le.addEventListener('dragover', e => {
+    if(!_imgDragSrc) return;
+    e.preventDefault();
+    e.dataTransfer.dropEffect = 'move';
+    // Position drop marker
+    const afterEl = getDragAfterElement(le, e.clientY);
+    if(afterEl) {
+      le.insertBefore(_imgDropMarker, afterEl);
+    } else {
+      le.appendChild(_imgDropMarker);
+    }
+  });
+  le.addEventListener('drop', e => {
+    if(!_imgDragSrc) return;
+    e.preventDefault();
+    const marker = document.getElementById('_img_drop_marker');
+    if(marker) {
+      le.insertBefore(_imgDragSrc, marker);
+      marker.remove();
+    }
+    _imgDragSrc.style.opacity = '';
+    _imgDragSrc = null;
+    schedSave();
+  });
+}
+
+function getDragAfterElement(container, y) {
+  const els = [...container.querySelectorAll(':not(.img-wrap[id="_img_drop_marker"])')].filter(el => {
+    if(el === _imgDragSrc || el.closest && el.closest('.img-wrap') === _imgDragSrc) return false;
+    const box = el.getBoundingClientRect();
+    return y < box.top + box.height / 2;
+  });
+  return els[0] || null;
 }
 
 // ── SETTINGS ──
