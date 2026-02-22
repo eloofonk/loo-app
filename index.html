@@ -8,10 +8,10 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
 :root {
-  --bg:#f5f5f7;
+  --bg:#ffffff;
   --surface:#ffffff;
-  --s2:#fbfbfd;
-  --s3:#f2f2f7;
+  --s2:#ffffff;
+  --s3:#f5f5f7;
   --border:rgba(0,0,0,.08);
   --border2:rgba(0,0,0,.14);
   --text:#1d1d1f;
@@ -34,12 +34,16 @@ input,textarea,select{font-family:var(--font)}
 
 /* ── TOP BAR ── */
 .topbar{height:44px;background:rgba(255,255,255,.82);backdrop-filter:saturate(180%) blur(20px);-webkit-backdrop-filter:saturate(180%) blur(20px);border-bottom:1px solid rgba(0,0,0,.08);display:flex;align-items:center;padding:0 14px;gap:8px;flex-shrink:0;z-index:100}
-.logo{font-size:16px;font-weight:700;letter-spacing:-.8px;color:var(--text);margin-right:4px;font-family:var(--font-display)}
+.logo{font-size:20px;font-weight:700;letter-spacing:-.8px;color:var(--text);margin-right:4px;font-family:var(--font-display)}
 .logo span{color:var(--accent)}
 .tb{padding:5px 11px;font-size:12px;font-weight:500;border-radius:7px;color:var(--t2);transition:all .12s;letter-spacing:-.1px}
 .tb:hover{background:rgba(0,0,0,.05);color:var(--text)}
 .tb.on{background:var(--a-bg);color:var(--accent)}
 .tb-sep{width:1px;height:18px;background:var(--border);margin:0 2px}
+.tb-search-wrap{position:relative;display:flex;align-items:center;margin-left:4px}
+.tb-search-ico{position:absolute;left:8px;font-size:12px;pointer-events:none;opacity:.5}
+.tb-search{width:200px;padding:5px 10px 5px 26px;border:1px solid var(--border);border-radius:8px;font-family:var(--font);font-size:12px;color:var(--text);background:var(--s3);outline:none;transition:all .15s}
+.tb-search:focus{border-color:var(--accent);background:var(--surface);width:240px;box-shadow:0 0 0 3px var(--a-bg)}
 .tb-r{margin-left:auto;display:flex;align-items:center;gap:4px}
 .ib{padding:4px 8px;font-size:12px;border-radius:5px;color:var(--t2)}
 .ib:hover{background:var(--s3);color:var(--text)}
@@ -139,11 +143,11 @@ input,textarea,select{font-family:var(--font)}
 .wc{font-size:10px;color:var(--t3);margin-left:auto;padding-right:4px}
 .rib-panel{display:flex;padding:5px 10px;gap:2px;min-height:60px;align-items:flex-start;flex-wrap:wrap}
 .rib-group{display:flex;flex-direction:column;padding:0 8px 0 0}
-.rib-group-label{font-size:9px;font-weight:600;color:var(--t3);text-transform:uppercase;letter-spacing:.5px;margin-bottom:3px;white-space:nowrap}
+.rib-group-label{font-size:10px;font-weight:600;color:var(--t3);text-transform:uppercase;letter-spacing:.5px;margin-bottom:3px;white-space:nowrap}
 .rib-btns{display:flex;gap:1px;align-items:center;flex-wrap:wrap}
 .rib-vdiv-outer{width:1px;background:var(--border);margin:2px 6px;align-self:stretch}
 .rib-vdiv{width:1px;height:16px;background:var(--border);margin:0 3px}
-.rb2{display:flex;flex-direction:column;align-items:center;gap:1px;padding:4px 7px;border-radius:7px;font-size:12px;color:var(--t2);min-width:36px;transition:all .12s;white-space:nowrap}
+.rb2{display:flex;flex-direction:column;align-items:center;gap:1px;padding:4px 7px;border-radius:7px;font-size:13px;color:var(--t2);min-width:36px;transition:all .12s;white-space:nowrap}
 .rb2:hover{background:rgba(0,0,0,.05);color:var(--text)}
 .rb2.on{background:var(--a-bg);color:var(--accent)}
 .rb2-ico{font-size:15px;line-height:1}
@@ -156,7 +160,7 @@ input,textarea,select{font-family:var(--font)}
 
 /* ── NOTE HEADER ── */
 .note-head{padding:8px 16px 4px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:6px;flex-shrink:0}
-.title-in{flex:1;border:none;outline:none;font-size:18px;font-weight:700;color:var(--text);background:transparent;font-family:var(--font)}
+.title-in{flex:1;border:none;outline:none;font-size:24px;font-weight:700;color:var(--text);background:transparent;font-family:var(--font)}
 .title-in::placeholder{color:var(--border2)}
 .meta-row{padding:3px 16px 6px;display:flex;align-items:center;gap:8px;border-bottom:1px solid var(--border);flex-shrink:0;flex-wrap:wrap}
 .meta-txt{font-size:11px;color:var(--t3)}
@@ -185,8 +189,8 @@ input,textarea,select{font-family:var(--font)}
 .le pre{background:var(--s3);border:1px solid var(--border);border-radius:6px;padding:12px;font-family:monospace;font-size:12px;white-space:pre-wrap;margin:8px 0;overflow-x:auto}
 .le code{background:var(--s3);padding:1px 5px;border-radius:3px;font-family:monospace;font-size:12px}
 .le pre code{background:none;padding:0}
-.le ul,.le ol{padding-left:20px;margin:4px 0}
-.le li{margin:2px 0;line-height:1.7}
+.le ul,.le ol{padding-left:20px;margin:4px 0;font-family:inherit}
+.le li{margin:2px 0;line-height:1.7;font-family:inherit}
 .le li input[type=checkbox]{margin-right:6px;cursor:pointer}
 .le hr{border:none;border-top:1px solid var(--border);margin:16px 0}
 .le a.wl{color:var(--accent);text-decoration:none;font-weight:500;padding:0 2px;border-radius:3px}
@@ -221,6 +225,20 @@ input,textarea,select{font-family:var(--font)}
 .img-wrap img{display:block;border-radius:8px}
 .img-resize-handle{position:absolute;bottom:4px;right:4px;width:14px;height:14px;background:var(--accent);border-radius:3px;cursor:se-resize;opacity:0;transition:opacity .15s}
 .img-wrap:hover .img-resize-handle{opacity:.8}
+
+/* ── COMMENTS ── */
+.note-comment{background:rgba(255,193,7,.15);border-bottom:2px solid #f59e0b;cursor:pointer;position:relative;border-radius:2px}
+.note-comment:hover::after{content:attr(data-comment);position:absolute;bottom:calc(100% + 6px);left:0;background:rgba(29,29,31,.92);color:#fff;padding:7px 12px;border-radius:8px;font-size:11px;white-space:pre-wrap;max-width:280px;line-height:1.5;z-index:200;box-shadow:0 4px 16px rgba(0,0,0,.2);font-family:var(--font);pointer-events:none}
+.comments-panel{position:fixed;right:0;top:44px;bottom:0;width:280px;background:var(--surface);border-left:1px solid var(--border);z-index:150;display:flex;flex-direction:column;transform:translateX(100%);transition:transform .25s cubic-bezier(.4,0,.2,1);box-shadow:-4px 0 24px rgba(0,0,0,.08)}
+.comments-panel.open{transform:translateX(0)}
+.cp2-head{padding:14px 16px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;flex-shrink:0}
+.cp2-title{font-size:13px;font-weight:700}
+.cp2-body{flex:1;overflow-y:auto;padding:10px}
+.comment-card{background:var(--s3);border-radius:8px;padding:10px 12px;margin-bottom:8px;border-left:3px solid #f59e0b}
+.comment-card-text{font-size:11px;color:var(--text);line-height:1.5;margin-bottom:6px;font-style:italic}
+.comment-card-quote{font-size:10px;color:var(--t3);margin-bottom:6px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.comment-card-del{font-size:10px;color:#dc2626;cursor:pointer;margin-top:4px}
+.comment-card-del:hover{text-decoration:underline}
 .fcard-video{max-width:100%;max-height:80px;border-radius:4px}
 
 /* ── BACKLINKS ── */
@@ -473,15 +491,13 @@ input,textarea,select{font-family:var(--font)}
   <div class="tb-sep"></div>
   <button class="tb" onclick="openNewNote()">+ Nueva nota</button>
   <button class="tb" onclick="openNewFolder()">📁 Carpeta</button>
+  <div class="tb-search-wrap">
+    <span class="tb-search-ico">🔍</span>
+    <input class="tb-search" id="tb-search" placeholder="Buscar notas…" oninput="filterNotes(this.value)" onfocus="if(sbHidden)toggleSb()">
+  </div>
   <div class="tb-r">
-    <select class="font-sel" id="font-sel" onchange="setEditorFont(this.value)" title="Fuente del editor">
-      <option value="Inter">Inter</option>
-      <option value="Georgia">Georgia</option>
-      <option value="'Courier New'">Courier New</option>
-      <option value="'Times New Roman'">Times New Roman</option>
-      <option value="system-ui">Sistema</option>
-    </select>
     <button class="tb" id="btn-todo" onclick="toggleTodo()">✱To do</button>
+    <button class="tb" onclick="toggleComments()" title="Comentarios">💬</button>
     <button class="tb" onclick="toggleClaude()">✦ Claude</button>
     <button class="tb" onclick="toggleSettings()" title="Configuración">⚙</button>
     <button class="tb" onclick="toggleSb()">☰</button>
@@ -556,6 +572,22 @@ input,textarea,select{font-family:var(--font)}
             <div class="rib-group">
               <div class="rib-group-label">Fuente</div>
               <div class="rib-btns">
+                <select class="font-sel" id="font-sel" onchange="setEditorFont(this.value)" title="Fuente del editor" style="height:28px;border-radius:6px;padding:2px 6px;font-size:12px;border:1px solid var(--border);background:var(--surface);color:var(--t2);cursor:pointer;outline:none">
+                  <option value="Inter">Inter</option>
+                  <option value="Georgia">Georgia</option>
+                  <option value="'Courier New'">Courier New</option>
+                  <option value="'Times New Roman'">Times New Roman</option>
+                  <option value="system-ui">Sistema</option>
+                </select>
+                <select id="font-size-sel" onchange="setEditorFontSize(this.value)" title="Tamaño de fuente" style="height:28px;border-radius:6px;padding:2px 6px;font-size:12px;border:1px solid var(--border);background:var(--surface);color:var(--t2);cursor:pointer;outline:none;width:54px">
+                  <option value="13">13</option>
+                  <option value="14" selected>14</option>
+                  <option value="15">15</option>
+                  <option value="16">16</option>
+                  <option value="18">18</option>
+                  <option value="20">20</option>
+                </select>
+                <div class="rib-vdiv"></div>
                 <button class="rb2 icon" onclick="ef('bold')" title="Negrita Ctrl+B"><strong>N</strong></button>
                 <button class="rb2 icon" onclick="ef('italic')" title="Cursiva Ctrl+I"><em>I</em></button>
                 <button class="rb2 icon" onclick="ef('underline')" title="Subrayado" style="text-decoration:underline">S</button>
@@ -727,6 +759,11 @@ input,textarea,select{font-family:var(--font)}
         <div id="res-body" class="res-body"></div>
       </div>
 
+      <!-- CREDITS FOOTER (non-editable) -->
+      <div style="padding:6px 16px;border-top:1px solid var(--border);display:flex;align-items:center;justify-content:flex-end;flex-shrink:0;user-select:none;pointer-events:none">
+        <span style="font-size:10px;color:var(--border2);letter-spacing:.2px">✱notas. · Eduardo Loo · v2.3</span>
+      </div>
+
       <!-- SPLIT VIEWER -->
       <div class="split-viewer" id="split-viewer" style="display:none">
         <div class="sv-head">
@@ -749,9 +786,29 @@ input,textarea,select{font-family:var(--font)}
         <button class="ib" onclick="toggleSecondPane()" style="margin-top:8px;font-size:11px">✕ Cerrar</button>
       </div>
       <div id="ew-b" style="display:none;flex-direction:column;flex:1;overflow:hidden;min-height:0">
-        <div class="ep-b-head">
-          <span class="ep-b-title" id="title-b">—</span>
-          <button class="ib" onclick="toggleSecondPane()">✕</button>
+        <!-- MINI RIBBON B -->
+        <div style="padding:4px 8px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:4px;flex-wrap:wrap;background:var(--surface);flex-shrink:0">
+          <button class="rb2 icon" onclick="efB('bold')" title="Negrita"><strong>N</strong></button>
+          <button class="rb2 icon" onclick="efB('italic')" title="Cursiva"><em>I</em></button>
+          <button class="rb2 icon" onclick="efB('underline')" title="Subrayado" style="text-decoration:underline">S</button>
+          <button class="rb2 icon" onclick="efB('strikeThrough')" title="Tachado"><s>S</s></button>
+          <div class="rib-vdiv"></div>
+          <button class="rb2 sm" onclick="iBB('ul')">☰ Lista</button>
+          <button class="rb2 sm" onclick="iBB('ol')">① Num</button>
+          <button class="rb2 sm" onclick="iBB('check')">☑ Tarea</button>
+          <button class="rb2 sm" onclick="iBB('quote')">❝ Cita</button>
+          <div class="rib-vdiv"></div>
+          <button class="rb2 sm" onclick="iHB(1)">H1</button>
+          <button class="rb2 sm" onclick="iHB(2)">H2</button>
+          <button class="rb2 sm" onclick="iHB(3)">H3</button>
+          <div class="rib-vdiv"></div>
+          <button class="ib" onclick="toggleSecondPane()" style="margin-left:auto">✕</button>
+        </div>
+        <div class="note-head">
+          <input class="title-in" id="title-b-input" placeholder="Sin título" oninput="onTitleB()" style="font-size:20px">
+        </div>
+        <div class="meta-row">
+          <span class="meta-txt" id="meta-date-b"></span>
         </div>
         <div class="lw" id="lw-b">
           <div class="le" id="le-b" contenteditable="true"
@@ -776,6 +833,20 @@ input,textarea,select{font-family:var(--font)}
         <button class="ib" onclick="toggleTodo()">✕</button>
       </div>
       <div class="tp-body" id="tp-body"></div>
+    </div>
+
+    <!-- COMMENTS PANEL -->
+    <div class="comments-panel" id="comments-panel">
+      <div class="cp2-head">
+        <span class="cp2-title">💬 Comentarios</span>
+        <button class="ib" onclick="toggleComments()">✕</button>
+      </div>
+      <div class="cp2-body" id="comments-body">
+        <div style="text-align:center;color:var(--t3);font-size:12px;padding:24px 12px">Sin comentarios en esta nota</div>
+      </div>
+      <div style="padding:10px;border-top:1px solid var(--border);flex-shrink:0">
+        <div style="font-size:11px;color:var(--t3);text-align:center">Selecciona texto y haz clic derecho → 💬 Agregar comentario</div>
+      </div>
     </div>
 
     <!-- CLAUDE PANEL -->
@@ -1136,6 +1207,40 @@ function schedSaveB() {
   saveTB = setTimeout(()=>{ localStorage.setItem('loo_notes',JSON.stringify(notes)); if(_currentUser) saveNote(n); }, 800);
 }
 
+function onTitleB() {
+  const n = notes.find(x => x.id === activeIdB); if(!n) return;
+  n.title = document.getElementById('title-b-input').value;
+  n.modified = D();
+  clearTimeout(saveTB); saveTB = setTimeout(()=>{ schedSaveB(); renderSB(); }, 400);
+}
+
+function efB(cmd) {
+  document.getElementById('le-b').focus();
+  document.execCommand(cmd);
+}
+
+function iBB(type) {
+  document.getElementById('le-b').focus();
+  const cmds = { ul:'insertUnorderedList', ol:'insertOrderedList' };
+  if(cmds[type]) { document.execCommand(cmds[type]); return; }
+  if(type==='quote') { document.execCommand('formatBlock',false,'blockquote'); return; }
+  if(type==='check') {
+    const li = document.createElement('li');
+    li.className = 'check-item';
+    const chk = document.createElement('input');
+    chk.type='checkbox';
+    li.appendChild(chk);
+    li.appendChild(document.createTextNode(' '));
+    document.execCommand('insertHTML',false,li.outerHTML);
+    return;
+  }
+}
+
+function iHB(n) {
+  document.getElementById('le-b').focus();
+  document.execCommand('formatBlock',false,'h'+n);
+}
+
 // ═══════════════════════════════════════════════
 // ── IDB (for large files) ──
 // ═══════════════════════════════════════════════
@@ -1331,8 +1436,9 @@ function openNoteInPaneB(id) {
   document.getElementById('ep-b-empty').style.display = 'none';
   const ewb = document.getElementById('ew-b');
   ewb.style.cssText = 'display:flex;flex-direction:column;flex:1;overflow:hidden;min-height:0';
-  document.getElementById('title-b').textContent = n.title || 'Sin título';
+  document.getElementById('title-b-input').value = n.title || '';
   document.getElementById('le-b').innerHTML = n.content || '';
+  document.getElementById('meta-date-b').textContent = `Modificado ${fmtD(n.modified)}`;
 }
 
 function toggleSecondPane() {
@@ -1358,6 +1464,7 @@ function onInput() {
 }
 
 function onMU() {
+  saveSelection();
   setTimeout(() => {
     const sel = window.getSelection();
     if(!sel || sel.isCollapsed || !sel.toString().trim()) { closeCtx(); return; }
@@ -1400,6 +1507,19 @@ function onKD(e) {
           sel.removeAllRanges(); sel.addRange(r);
         }
         schedSave(); return;
+      }
+      // Backspace on first empty list item → exit list
+      const li = nd.nodeType===3 ? nd.parentElement?.closest('li') : nd.closest?.('li');
+      if(li) {
+        const list = li.closest('ul,ol');
+        if(list && li === list.firstElementChild && (li.textContent.trim()==='' || sel.getRangeAt(0).startOffset===0)) {
+          e.preventDefault();
+          document.execCommand('outdent');
+          if(li.textContent.trim()==='') {
+            document.execCommand(list.tagName==='OL' ? 'insertOrderedList' : 'insertUnorderedList');
+          }
+          schedSave(); return;
+        }
       }
     }
   }
@@ -1450,21 +1570,35 @@ function onPasteB(e) {
 // ═══════════════════════════════════════════════
 // ── FORMAT FUNCTIONS ──
 // ═══════════════════════════════════════════════
+// ── SAVED SELECTION (for color buttons that steal focus) ──
+let _savedRange = null;
+function saveSelection() {
+  const sel = window.getSelection();
+  if(sel && sel.rangeCount > 0) _savedRange = sel.getRangeAt(0).cloneRange();
+}
+function restoreSelection() {
+  if(!_savedRange) return;
+  const sel = window.getSelection();
+  sel.removeAllRanges();
+  sel.addRange(_savedRange);
+}
+
 function ef(cmd) {
+  restoreSelection();
   document.getElementById('le').focus();
   document.execCommand(cmd);
   schedSave(); closeCtx();
 }
 
 function hl(color) {
-  document.getElementById('le').focus();
+  restoreSelection();
   const c = color || '#fef08a';
   document.execCommand('hiliteColor', false, c);
   schedSave(); closeCtx();
 }
 
 function clrTxt(c) {
-  document.getElementById('le').focus();
+  restoreSelection();
   document.execCommand('foreColor', false, c);
   schedSave(); closeCtx();
 }
@@ -1509,6 +1643,9 @@ function iTable() {
       <button class="tbl-btn" onmousedown="event.preventDefault();tblAddCol(this)">+ Columna</button>
       <button class="tbl-btn" onmousedown="event.preventDefault();tblDelRow(this)">− Fila</button>
       <button class="tbl-btn" onmousedown="event.preventDefault();tblDelCol(this)">− Columna</button>
+      <button class="tbl-btn" onmousedown="event.preventDefault();tblMergeSel(this)" title="Combinar celdas seleccionadas">⊞ Combinar</button>
+      <button class="tbl-btn" onmousedown="event.preventDefault();tblSplitCell(this)" title="Separar celda combinada">⊟ Separar</button>
+      <button class="tbl-btn" onmousedown="event.preventDefault();tblAddHeader(this)" title="Agregar fila de encabezado">≡ Encabezado</button>
     </div>
     <table><thead><tr><th>Columna 1</th><th>Columna 2</th><th>Columna 3</th></tr></thead>
     <tbody><tr><td><br></td><td><br></td><td><br></td></tr></tbody></table>`;
@@ -1551,6 +1688,59 @@ function tblDelCol(btn) {
     Array.from(tbl.rows).forEach(row => { if(row.cells.length>1) row.deleteCell(-1); });
     schedSave();
   }
+}
+
+function tblMergeSel(btn) {
+  // Merge all selected cells (cells with window selection) in same row
+  const tbl = btn.closest('.tbl-wrap').querySelector('table');
+  const sel = window.getSelection();
+  // Find focused cell
+  const focusCell = document.activeElement?.closest('td,th');
+  if(!focusCell || !tbl.contains(focusCell)) { toast('Haz clic en una celda primero'); return; }
+  const row = focusCell.parentElement;
+  const cells = Array.from(row.cells);
+  const idx = cells.indexOf(focusCell);
+  if(idx === cells.length - 1) { toast('Selecciona más celdas para combinar'); return; }
+  // Merge current cell with next cell
+  const nextCell = cells[idx+1];
+  focusCell.colSpan = (focusCell.colSpan||1) + (nextCell.colSpan||1);
+  const content = nextCell.innerHTML.trim();
+  if(content && content !== '<br>') focusCell.innerHTML += ' ' + content;
+  nextCell.remove();
+  schedSave(); toast('Celdas combinadas');
+}
+
+function tblSplitCell(btn) {
+  const tbl = btn.closest('.tbl-wrap').querySelector('table');
+  const focusCell = document.activeElement?.closest('td,th');
+  if(!focusCell || !tbl.contains(focusCell)) { toast('Haz clic en una celda combinada'); return; }
+  const span = focusCell.colSpan || 1;
+  if(span <= 1) { toast('Esta celda no está combinada'); return; }
+  const row = focusCell.parentElement;
+  for(let i = 1; i < span; i++) {
+    const newCell = document.createElement(focusCell.tagName.toLowerCase());
+    newCell.innerHTML = '<br>';
+    row.insertBefore(newCell, focusCell.nextSibling);
+  }
+  focusCell.colSpan = 1;
+  schedSave(); toast('Celda separada');
+}
+
+function tblAddHeader(btn) {
+  const tbl = btn.closest('.tbl-wrap').querySelector('table');
+  let thead = tbl.querySelector('thead');
+  if(thead) { toast('Ya tiene encabezado'); return; }
+  thead = document.createElement('thead');
+  const colCount = tbl.rows[0]?.cells.length || 3;
+  const tr = document.createElement('tr');
+  for(let i = 0; i < colCount; i++) {
+    const th = document.createElement('th');
+    th.innerHTML = `Columna ${i+1}`;
+    tr.appendChild(th);
+  }
+  thead.appendChild(tr);
+  tbl.insertBefore(thead, tbl.firstChild);
+  schedSave(); toast('Encabezado agregado');
 }
 
 function initTableResizers(tblWrap) {
@@ -1901,18 +2091,20 @@ async function openResource(resId) {
     if(idbData) dataUrl = idbData.dataUrl;
   }
   if(!dataUrl) { toast('Archivo no disponible'); return; }
-  // Open in viewer or download
+  // Always open with default system app via download link
+  const a = document.createElement('a');
+  a.href = dataUrl;
+  // For known browser-renderable types, open in new tab (lets OS handle it)
   const ext = res.ext;
-  const isImg   = /^(jpg|jpeg|png|gif|webp|svg)$/.test(ext);
-  const isVid   = /^(mp4|webm|mov|avi|mkv)$/.test(ext);
-  const isAudio = /^(mp3|wav|ogg|m4a|aac|flac)$/.test(ext);
-  const isPDF   = ext === 'pdf';
-  if(isImg||isVid||isAudio||isPDF) {
-    openSVDirect(res.name, ext, dataUrl);
+  const openInTab = /^(jpg|jpeg|png|gif|webp|svg|pdf|mp4|webm|mp3|wav|ogg)$/.test(ext);
+  if(openInTab) {
+    a.target = '_blank';
+    a.rel = 'noopener';
+    a.click();
   } else {
-    // Download
-    const a = document.createElement('a'); a.href = dataUrl; a.download = res.name; a.click();
-    toast('📥 Descargando ' + res.name);
+    a.download = res.name;
+    a.click();
+    toast('📥 Abriendo ' + res.name);
   }
 }
 
@@ -2456,14 +2648,120 @@ function openRCMenu(e) {
     return;
   }
   rcTarget = e.target;
+  // Check if text is selected
+  const sel = window.getSelection();
+  const hasSelection = sel && sel.toString().trim().length > 0;
   const menu = document.getElementById('rc-menu');
+  // Build dynamic menu
+  const textSec = hasSelection ? `
+    <div class="rc-sub">Texto seleccionado</div>
+    <div class="rc-item" onclick="ef('bold');closeRCMenu()"><strong>N</strong> Negrita</div>
+    <div class="rc-item" onclick="ef('italic');closeRCMenu()"><em>I</em> Cursiva</div>
+    <div class="rc-item" onclick="ef('underline');closeRCMenu()"><span style='text-decoration:underline'>S</span> Subrayado</div>
+    <div class="rc-item" onclick="ef('strikeThrough');closeRCMenu()"><s>S</s> Tachado</div>
+    <div style="padding:3px 8px 2px;display:flex;gap:4px;flex-wrap:wrap">
+      <div style="width:16px;height:16px;border-radius:3px;background:#dc2626;cursor:pointer" onclick="clrTxt('#dc2626');closeRCMenu()" title="Rojo"></div>
+      <div style="width:16px;height:16px;border-radius:3px;background:#16a34a;cursor:pointer" onclick="clrTxt('#16a34a');closeRCMenu()" title="Verde"></div>
+      <div style="width:16px;height:16px;border-radius:3px;background:#2563eb;cursor:pointer" onclick="clrTxt('#2563eb');closeRCMenu()" title="Azul"></div>
+      <div style="width:16px;height:16px;border-radius:3px;background:#d97706;cursor:pointer" onclick="clrTxt('#d97706');closeRCMenu()" title="Naranja"></div>
+      <div style="width:16px;height:16px;border-radius:3px;background:#7c3aed;cursor:pointer" onclick="clrTxt('#7c3aed');closeRCMenu()" title="Morado"></div>
+      <div style="width:16px;height:16px;border-radius:3px;background:#fef08a;border:1px solid #ccc;cursor:pointer" onclick="hl('#fef08a');closeRCMenu()" title="Resaltar"></div>
+      <div style="width:16px;height:16px;border-radius:3px;background:var(--s3);border:1px solid #ccc;cursor:pointer;font-size:9px;display:flex;align-items:center;justify-content:center" onclick="document.execCommand('removeFormat');closeRCMenu()" title="Quitar formato">✕</div>
+    </div>
+    <div class="rc-item" onclick="document.execCommand('copy');closeRCMenu()">⎘ Copiar</div>
+    <div class="rc-item" onclick="document.execCommand('cut');closeRCMenu()">✂ Cortar</div>
+    <div class="rc-item" onclick="makeSupertag();closeRCMenu()" style="color:var(--accent);font-weight:600">✱ Convertir en supertag</div>
+    <div class="rc-sep"></div>` : '';
+  menu.innerHTML = textSec + `
+    <div class="rc-sub">Formato de bloque</div>
+    <div class="rc-item" onclick="bswRC('p')">¶ Párrafo</div>
+    <div class="rc-item" onclick="bswRC('h1')">H1 Título 1</div>
+    <div class="rc-item" onclick="bswRC('h2')">H2 Título 2</div>
+    <div class="rc-item" onclick="bswRC('h3')">H3 Título 3</div>
+    <div class="rc-item" onclick="bswRC('ul')">≡ Lista</div>
+    <div class="rc-item" onclick="bswRC('ol')">① Lista numerada</div>
+    <div class="rc-item" onclick="bswRC('quote')">❝ Cita</div>
+    <div class="rc-item" onclick="bswRC('code')">{} Código</div>
+    <div class="rc-sep"></div>
+    <div class="rc-item" onclick="addComment();closeRCMenu()">💬 Agregar comentario</div>
+    <div class="rc-sep"></div>
+    <div class="rc-item danger" onclick="rcDelete()">🗑 Eliminar nota</div>`;
   menu.style.left = Math.min(e.clientX, window.innerWidth-220) + 'px';
-  menu.style.top  = Math.min(e.clientY, window.innerHeight-320) + 'px';
+  menu.style.top  = Math.min(e.clientY, window.innerHeight-400) + 'px';
   menu.classList.add('open');
   setTimeout(() => document.addEventListener('mousedown', closeRCMenu, {once:true}), 10);
 }
 function closeRCMenu() { document.getElementById('rc-menu').classList.remove('open'); }
 function rcDelete() { closeRCMenu(); deleteNote(); }
+
+// ═══════════════════════════════════════════════
+// ── COMMENTS SYSTEM ──
+// ═══════════════════════════════════════════════
+function toggleComments() {
+  const panel = document.getElementById('comments-panel');
+  panel.classList.toggle('open');
+  if(panel.classList.contains('open')) renderComments();
+}
+
+function addComment() {
+  const sel = window.getSelection();
+  if(!sel || sel.isCollapsed || !sel.toString().trim()) {
+    toast('Selecciona texto primero para comentar');
+    return;
+  }
+  const selectedText = sel.toString().trim().slice(0, 80);
+  // Show inline prompt
+  const comment = prompt(`Comentario para: "${selectedText.slice(0,40)}${selectedText.length>40?'…':''}"`, '');
+  if(!comment?.trim()) return;
+  // Wrap selection in comment span
+  try {
+    const range = sel.getRangeAt(0);
+    const span = document.createElement('span');
+    span.className = 'note-comment';
+    span.dataset.comment = comment.trim();
+    span.dataset.quote = selectedText;
+    span.dataset.cid = Date.now().toString();
+    range.surroundContents(span);
+    sel.removeAllRanges();
+    schedSave();
+    toast('💬 Comentario agregado');
+    // Open comments panel
+    const panel = document.getElementById('comments-panel');
+    panel.classList.add('open');
+    renderComments();
+  } catch(e) {
+    toast('Selecciona texto continuo para comentar');
+  }
+}
+
+function renderComments() {
+  const le = document.getElementById('le');
+  const body = document.getElementById('comments-body');
+  if(!le || !body) return;
+  const spans = le.querySelectorAll('.note-comment');
+  if(!spans.length) {
+    body.innerHTML = '<div style="text-align:center;color:var(--t3);font-size:12px;padding:24px 12px">Sin comentarios en esta nota</div>';
+    return;
+  }
+  body.innerHTML = Array.from(spans).map(s => `
+    <div class="comment-card" data-cid="${s.dataset.cid}">
+      <div class="comment-card-quote">❝ ${hesc((s.dataset.quote||'').slice(0,60))}</div>
+      <div class="comment-card-text">${hesc(s.dataset.comment||'')}</div>
+      <div class="comment-card-del" onclick="deleteComment('${s.dataset.cid}')">🗑 Eliminar</div>
+    </div>`).join('');
+}
+
+function deleteComment(cid) {
+  const le = document.getElementById('le');
+  const span = le.querySelector(`.note-comment[data-cid="${cid}"]`);
+  if(!span) return;
+  const parent = span.parentNode;
+  while(span.firstChild) parent.insertBefore(span.firstChild, span);
+  parent.removeChild(span);
+  schedSave();
+  renderComments();
+  toast('Comentario eliminado');
+}
 
 function showBlockCtxMenu(x, y, label, el) {
   let m=document.getElementById('block-ctx-menu');
@@ -2771,11 +3069,19 @@ function setEditorFont(f) {
   document.getElementById('le').style.fontFamily=f;
   localStorage.setItem('loo_font',f);
 }
+function setEditorFontSize(size) {
+  document.getElementById('le').style.fontSize = size + 'px';
+  localStorage.setItem('loo_fontsize', size);
+}
 function applyEditorFont() {
   const f=localStorage.getItem('loo_font')||'Inter';
+  const sz=localStorage.getItem('loo_fontsize')||'14';
   document.getElementById('le').style.fontFamily=f;
+  document.getElementById('le').style.fontSize=sz+'px';
   const sel=document.getElementById('font-sel');
   if(sel) [...sel.options].forEach(o=>{ if(o.value===f) o.selected=true; });
+  const szSel=document.getElementById('font-size-sel');
+  if(szSel) [...szSel.options].forEach(o=>{ if(o.value===sz) o.selected=true; });
 }
 
 // ═══════════════════════════════════════════════
@@ -3040,8 +3346,10 @@ async function initApp() {
 <p>Escribe <code>[[</code> para enlazar a otra nota. Los enlaces son bidireccionales.</p>
 <h3>☁ Sincronización</h3>
 <p>Tus notas se guardan automáticamente en la nube. Puedes abrir loo desde cualquier dispositivo con tu misma cuenta.</p>
-<hr>
-<p style="color:var(--t3);font-size:12px">Diseñado y construido por <strong>Eduardo Loo</strong> · v2.0 · 2025</p>`
+<h3>💬 Comentarios</h3>
+<p>Selecciona texto y haz clic derecho → <strong>💬 Agregar comentario</strong> para anotar observaciones inline.</p>
+<h3>☁ Sincronización</h3>
+<p>Tus notas se guardan automáticamente en la nube. Puedes abrir loo desde cualquier dispositivo con tu misma cuenta.</p>`
     };
     notes.unshift(welcomeNote);
     await saveNote(welcomeNote);
