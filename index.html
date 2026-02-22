@@ -326,30 +326,49 @@ input, textarea, select { font-family: var(--ui) }
 .rib-vdiv-outer { width: 1px; background: var(--border); margin: 2px 8px; align-self: stretch }
 .rib-vdiv    { width: 1px; height: 16px; background: var(--border); margin: 0 3px }
 .rb2 {
+  position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 2px;
-  padding: 4px 8px;
-  border-radius: 6px;
-  font-size: 13px;
+  gap: 3px;
+  padding: 5px 8px 4px;
+  border-radius: 7px;
   color: var(--t2);
-  min-width: 34px;
-  transition: all .12s;
+  min-width: 44px;
+  transition: background .1s, color .1s;
   white-space: nowrap;
   font-family: var(--ui);
 }
 .rb2:hover  { background: var(--s3); color: var(--text) }
 .rb2.on     { background: var(--a-bg); color: var(--accent) }
-.rb2-ico    { font-size: 14px; line-height: 1 }
-.rb2-lbl    { font-size: 9px; font-weight: 600; color: var(--t3); line-height: 1; letter-spacing: .2px }
-.rb2.icon   { min-width: 28px; flex-direction: row; padding: 5px 8px; font-size: 13px }
-.rb2.sm     { font-size: 11px; flex-direction: row; padding: 5px 9px }
-/* Simplified color swatches */
-.rib-clrs   { display: flex; gap: 4px; align-items: center; padding: 3px 0 }
-.rib-clr    { width: 16px; height: 16px; border-radius: 50%; cursor: pointer; border: 1.5px solid rgba(0,0,0,.1); transition: transform .1s; flex-shrink: 0 }
-.rib-clr:hover { transform: scale(1.25) }
-.rib-clr.wide { width: 28px; height: 14px; border-radius: 3px }
+.rb2.fmt    { min-width: 34px; padding: 5px 6px 4px }
+.rb2.hd     { min-width: 36px; padding: 5px 7px 4px }
+.rb2-ico {
+  display: flex; align-items: center; justify-content: center;
+  width: 24px; height: 24px; flex-shrink: 0;
+}
+.rb2-ico svg { width: 18px; height: 18px; stroke: currentColor; fill: none }
+.rb2-lbl {
+  font-size: 9px; font-weight: 600; color: var(--t3);
+  line-height: 1; letter-spacing: .1px;
+  max-width: 52px; overflow: hidden; text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.rb2:hover .rb2-lbl { color: var(--t2) }
+/* Color swatch group */
+.rib-clr-group { display: flex; flex-direction: column; gap: 3px; padding: 2px 0 }
+.rib-clr-row   { display: flex; gap: 3px; align-items: center }
+.rib-clr-dot   { width: 15px; height: 15px; border-radius: 50%; cursor: pointer; border: 1.5px solid rgba(0,0,0,.1); transition: transform .1s; flex-shrink: 0 }
+.rib-clr-dot:hover { transform: scale(1.25) }
+.rib-clr-x     { background: transparent !important; border: 1.5px solid var(--border2) !important; font-size: 8px; display: flex; align-items: center; justify-content: center; color: var(--t3) }
+/* Selects in ribbon */
+.rib-sel {
+  height: 28px; border-radius: 6px; padding: 2px 6px;
+  font-size: 12px; font-family: var(--ui);
+  border: 1px solid var(--border); background: var(--surface);
+  color: var(--t2); cursor: pointer; outline: none;
+}
+.rib-sel:focus { border-color: var(--accent) }
 
 /* ── NOTE HEADER ── */
 .note-head  { padding: 12px 28px 6px; border-bottom: 1px solid var(--border); display: flex; align-items: center; gap: 6px; flex-shrink: 0 }
@@ -832,29 +851,41 @@ input, textarea, select { font-family: var(--ui) }
             <button class="rib-tab" id="rib-vista" onclick="ribTab('vista')">Vista</button>
             <span class="wc" id="wc">0 palabras</span>
           </div>
-          <!-- INICIO -->
+
+          <!-- ── INICIO ── -->
           <div class="rib-panel" id="rp-inicio">
+
             <div class="rib-group">
               <div class="rib-group-label">Portapapeles</div>
               <div class="rib-btns">
-                <button class="rb2" onclick="document.execCommand('paste')" title="Pegar"><span class="rb2-ico">📋</span><span class="rb2-lbl">Pegar</span></button>
-                <div class="rib-vdiv"></div>
-                <button class="rb2 sm" onclick="document.execCommand('cut')">✂ Cortar</button>
-                <button class="rb2 sm" onclick="document.execCommand('copy')">⎘ Copiar</button>
+                <button class="rb2" onclick="document.execCommand('paste')">
+                  <span class="rb2-ico"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="2" width="6" height="4" rx="1"/><path d="M8 4H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2h-2"/><path d="M9 12h6M9 16h6"/></svg></span>
+                  <span class="rb2-lbl">Pegar</span>
+                </button>
+                <button class="rb2" onclick="document.execCommand('cut')">
+                  <span class="rb2-ico"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="20" r="2"/><circle cx="18" cy="20" r="2"/><path d="M8.12 15.12L12 12M5 3l7 9M19 3l-7 9"/></svg></span>
+                  <span class="rb2-lbl">Cortar</span>
+                </button>
+                <button class="rb2" onclick="document.execCommand('copy')">
+                  <span class="rb2-ico"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg></span>
+                  <span class="rb2-lbl">Copiar</span>
+                </button>
               </div>
             </div>
+
             <div class="rib-vdiv-outer"></div>
+
             <div class="rib-group">
               <div class="rib-group-label">Fuente</div>
-              <div class="rib-btns">
-                <select class="font-sel" id="font-sel" onchange="setEditorFont(this.value)" title="Fuente del editor" style="height:28px;border-radius:6px;padding:2px 6px;font-size:12px;border:1px solid var(--border);background:var(--surface);color:var(--t2);cursor:pointer;outline:none">
+              <div class="rib-btns" style="gap:4px;align-items:center">
+                <select class="rib-sel" id="font-sel" onchange="setEditorFont(this.value)" title="Fuente">
                   <option value="Inter">Inter</option>
                   <option value="Georgia">Georgia</option>
                   <option value="'Courier New'">Courier New</option>
                   <option value="'Times New Roman'">Times New Roman</option>
                   <option value="system-ui">Sistema</option>
                 </select>
-                <select id="font-size-sel" onchange="setEditorFontSize(this.value)" title="Tamaño de fuente" style="height:28px;border-radius:6px;padding:2px 6px;font-size:12px;border:1px solid var(--border);background:var(--surface);color:var(--t2);cursor:pointer;outline:none;width:54px">
+                <select class="rib-sel" id="font-size-sel" onchange="setEditorFontSize(this.value)" title="Tamaño" style="width:52px">
                   <option value="13">13</option>
                   <option value="14" selected>14</option>
                   <option value="15">15</option>
@@ -863,118 +894,234 @@ input, textarea, select { font-family: var(--ui) }
                   <option value="20">20</option>
                 </select>
                 <div class="rib-vdiv"></div>
-                <button class="rb2 icon" onclick="ef('bold')" title="Negrita Ctrl+B"><strong>N</strong></button>
-                <button class="rb2 icon" onclick="ef('italic')" title="Cursiva Ctrl+I"><em>I</em></button>
-                <button class="rb2 icon" onclick="ef('underline')" title="Subrayado" style="text-decoration:underline">S</button>
-                <button class="rb2 icon" onclick="ef('strikeThrough')" title="Tachado"><s>S</s></button>
+                <button class="rb2 fmt" onclick="ef('bold')" title="Negrita">
+                  <span class="rb2-ico" style="font-weight:700;font-size:15px;font-family:Georgia,serif">B</span>
+                  <span class="rb2-lbl">Negrita</span>
+                </button>
+                <button class="rb2 fmt" onclick="ef('italic')" title="Cursiva">
+                  <span class="rb2-ico" style="font-style:italic;font-size:15px;font-family:Georgia,serif">I</span>
+                  <span class="rb2-lbl">Cursiva</span>
+                </button>
+                <button class="rb2 fmt" onclick="ef('underline')" title="Subrayado">
+                  <span class="rb2-ico" style="text-decoration:underline;font-size:14px;font-weight:600">U</span>
+                  <span class="rb2-lbl">Subrayado</span>
+                </button>
+                <button class="rb2 fmt" onclick="ef('strikeThrough')" title="Tachado">
+                  <span class="rb2-ico" style="text-decoration:line-through;font-size:14px">S</span>
+                  <span class="rb2-lbl">Tachado</span>
+                </button>
                 <div class="rib-vdiv"></div>
-                <div style="display:flex;flex-direction:column;gap:4px;padding:2px 0">
-                  <div style="font-size:9px;color:var(--t3);font-weight:600;text-transform:uppercase;letter-spacing:.4px;font-family:var(--font-ui)">Resaltar</div>
-                  <div style="display:flex;gap:4px;align-items:center">
-                    <div class="rib-clr" style="background:var(--hl);border-radius:4px;width:22px;height:14px" onclick="hl()" title="Resaltar amarillo"></div>
-                    <div class="rib-clr" style="background:transparent;border:1px solid var(--border2);border-radius:4px;width:16px;height:14px;font-size:9px;display:flex;align-items:center;justify-content:center;color:var(--t3)" onclick="hl('transparent')" title="Quitar resaltado">✕</div>
+                <!-- Highlight + text colors -->
+                <div class="rib-clr-group">
+                  <div class="rib-clr-row">
+                    <button class="rb2 fmt" onclick="hl()" title="Resaltar">
+                      <span class="rb2-ico"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 3H5a2 2 0 0 0-2 2v4m6-6h10a2 2 0 0 1 2 2v4M9 3v18m0 0h10a2 2 0 0 0 2-2v-4M9 21H5a2 2 0 0 1-2-2v-4m0 0h18" stroke="none"/><path d="m14 8-4 4 4 4"/><rect x="3" y="14" width="18" height="3" rx="1" fill="var(--hl)" stroke="none"/><path d="M9 7l6 10" stroke-width="2.5" stroke="var(--text)"/><path d="M15 7L9 17" stroke-width="2.5" stroke="var(--text)"/></svg></span>
+                      <span class="rb2-lbl">Resaltar</span>
+                    </button>
+                    <button class="rb2 fmt" onclick="hl('transparent')" title="Quitar resaltado" style="font-size:11px;min-width:28px">
+                      <span class="rb2-ico"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></span>
+                      <span class="rb2-lbl">Sin resaltado</span>
+                    </button>
                   </div>
-                  <div style="font-size:9px;color:var(--t3);font-weight:600;text-transform:uppercase;letter-spacing:.4px;margin-top:2px;font-family:var(--font-ui)">Color texto</div>
-                  <div style="display:flex;gap:4px;align-items:center">
-                    <div class="rib-clr" style="background:#1d1d1f;border-radius:50%;width:14px;height:14px" onclick="clrTxt('#1d1d1f')" title="Negro"></div>
-                    <div class="rib-clr" style="background:#1a56db;border-radius:50%;width:14px;height:14px" onclick="clrTxt('#1a56db')" title="Azul"></div>
-                    <div class="rib-clr" style="background:#c0392b;border-radius:50%;width:14px;height:14px" onclick="clrTxt('#c0392b')" title="Rojo"></div>
-                    <div class="rib-clr" style="background:transparent;border:1px solid var(--border2);border-radius:50%;width:14px;height:14px;font-size:9px;display:flex;align-items:center;justify-content:center;color:var(--t3)" onclick="document.execCommand('removeFormat')" title="Quitar color">✕</div>
+                  <div class="rib-clr-row" style="margin-top:3px">
+                    <div class="rib-clr-dot" style="background:#1d1d1f" onclick="clrTxt('#1d1d1f')" title="Negro"></div>
+                    <div class="rib-clr-dot" style="background:#1a56db" onclick="clrTxt('#1a56db')" title="Azul"></div>
+                    <div class="rib-clr-dot" style="background:#c0392b" onclick="clrTxt('#c0392b')" title="Rojo"></div>
+                    <div class="rib-clr-dot rib-clr-x" onclick="document.execCommand('removeFormat')" title="Quitar color">✕</div>
                   </div>
                 </div>
               </div>
             </div>
+
             <div class="rib-vdiv-outer"></div>
+
             <div class="rib-group">
               <div class="rib-group-label">Párrafo</div>
               <div class="rib-btns">
-                <button class="rb2 icon" onclick="document.execCommand('justifyLeft')" title="Izquierda">⬤◻◻</button>
-                <button class="rb2 icon" onclick="document.execCommand('justifyCenter')" title="Centro">◻⬤◻</button>
-                <button class="rb2 icon" onclick="document.execCommand('justifyRight')" title="Derecha">◻◻⬤</button>
+                <button class="rb2" onclick="document.execCommand('justifyLeft')">
+                  <span class="rb2-ico"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="15" y2="12"/><line x1="3" y1="18" x2="18" y2="18"/></svg></span>
+                  <span class="rb2-lbl">Izquierda</span>
+                </button>
+                <button class="rb2" onclick="document.execCommand('justifyCenter')">
+                  <span class="rb2-ico"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="6" y1="12" x2="18" y2="12"/><line x1="4" y1="18" x2="20" y2="18"/></svg></span>
+                  <span class="rb2-lbl">Centro</span>
+                </button>
+                <button class="rb2" onclick="document.execCommand('justifyRight')">
+                  <span class="rb2-ico"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="9" y1="12" x2="21" y2="12"/><line x1="6" y1="18" x2="21" y2="18"/></svg></span>
+                  <span class="rb2-lbl">Derecha</span>
+                </button>
                 <div class="rib-vdiv"></div>
-                <button class="rb2 icon" onclick="iB('ul')" title="Lista">☰</button>
-                <button class="rb2 icon" onclick="iB('ol')" title="Lista numerada">①</button>
-                <button class="rb2 icon" onclick="iB('check')" title="Lista de tareas">☑</button>
+                <button class="rb2" onclick="iB('ul')">
+                  <span class="rb2-ico"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round"><line x1="9" y1="6" x2="20" y2="6"/><line x1="9" y1="12" x2="20" y2="12"/><line x1="9" y1="18" x2="20" y2="18"/><circle cx="4" cy="6" r="1.5" fill="currentColor" stroke="none"/><circle cx="4" cy="12" r="1.5" fill="currentColor" stroke="none"/><circle cx="4" cy="18" r="1.5" fill="currentColor" stroke="none"/></svg></span>
+                  <span class="rb2-lbl">Lista</span>
+                </button>
+                <button class="rb2" onclick="iB('ol')">
+                  <span class="rb2-ico"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round"><line x1="10" y1="6" x2="21" y2="6"/><line x1="10" y1="12" x2="21" y2="12"/><line x1="10" y1="18" x2="21" y2="18"/><path d="M4 6h1v4" stroke-width="1.5"/><path d="M4 11h2" stroke-width="1.5"/><path d="M3 17h3v-1.5L3 14h3" stroke-width="1.5"/></svg></span>
+                  <span class="rb2-lbl">Numerada</span>
+                </button>
+                <button class="rb2" onclick="iB('check')">
+                  <span class="rb2-ico"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="7" height="7" rx="1"/><polyline points="4 9 6 11 8 7"/><line x1="13" y1="8" x2="21" y2="8"/><rect x="3" y="14" width="7" height="7" rx="1"/><line x1="13" y1="17" x2="21" y2="17"/></svg></span>
+                  <span class="rb2-lbl">Tareas</span>
+                </button>
               </div>
             </div>
+
             <div class="rib-vdiv-outer"></div>
+
             <div class="rib-group">
-              <div class="rib-group-label">Estilos</div>
+              <div class="rib-group-label">Estilo</div>
               <div class="rib-btns">
-                <button class="rb2 sm" onclick="iH(1)">Título 1</button>
-                <button class="rb2 sm" onclick="iH(2)">Título 2</button>
-                <button class="rb2 sm" onclick="iH(3)">Título 3</button>
-                <button class="rb2 sm" onclick="document.execCommand('formatBlock',false,'p')">Normal</button>
+                <button class="rb2 hd" onclick="iH(1)"><span class="rb2-ico" style="font-size:13px;font-weight:700;letter-spacing:-.3px">H1</span><span class="rb2-lbl">Título 1</span></button>
+                <button class="rb2 hd" onclick="iH(2)"><span class="rb2-ico" style="font-size:12px;font-weight:700">H2</span><span class="rb2-lbl">Título 2</span></button>
+                <button class="rb2 hd" onclick="iH(3)"><span class="rb2-ico" style="font-size:11px;font-weight:600">H3</span><span class="rb2-lbl">Título 3</span></button>
+                <button class="rb2 hd" onclick="document.execCommand('formatBlock',false,'p')"><span class="rb2-ico" style="font-size:11px">¶</span><span class="rb2-lbl">Normal</span></button>
               </div>
             </div>
-          </div>
-          <!-- INSERTAR -->
+
+          </div><!-- /rp-inicio -->
+
+          <!-- ── INSERTAR ── -->
           <div class="rib-panel" id="rp-insertar" style="display:none">
+
             <div class="rib-group">
               <div class="rib-group-label">Bloques</div>
               <div class="rib-btns">
-                <button class="rb2" onclick="si('supertag')" title="Supertag"><span class="rb2-ico" style="color:var(--accent);font-weight:900">✱</span><span class="rb2-lbl">Supertag</span></button>
-                <button class="rb2" onclick="iTable()" title="Tabla"><span class="rb2-ico">⊞</span><span class="rb2-lbl">Tabla</span></button>
-                <button class="rb2" onclick="iB('quote')" title="Cita"><span class="rb2-ico">❝</span><span class="rb2-lbl">Cita</span></button>
-                <button class="rb2" onclick="iB('code')" title="Código"><span class="rb2-ico">{}</span><span class="rb2-lbl">Código</span></button>
-                <button class="rb2" onclick="si('info')" title="Info"><span class="rb2-ico">ℹ</span><span class="rb2-lbl">Info</span></button>
-                <button class="rb2" onclick="si('warn')" title="Alerta"><span class="rb2-ico">⚠</span><span class="rb2-lbl">Alerta</span></button>
-                <button class="rb2" onclick="si('divider')" title="Separador"><span class="rb2-ico">─</span><span class="rb2-lbl">Línea</span></button>
+                <button class="rb2" onclick="si('supertag')">
+                  <span class="rb2-ico" style="color:var(--accent);font-size:18px;font-weight:900;line-height:1">✱</span>
+                  <span class="rb2-lbl">Supertag</span>
+                </button>
+                <button class="rb2" onclick="iTable()">
+                  <span class="rb2-ico"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="3" y1="15" x2="21" y2="15"/><line x1="9" y1="3" x2="9" y2="21"/><line x1="15" y1="3" x2="15" y2="21"/></svg></span>
+                  <span class="rb2-lbl">Tabla</span>
+                </button>
+                <button class="rb2" onclick="iB('quote')">
+                  <span class="rb2-ico"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21c3 0 7-1 7-8V5c0-1.25-.756-2.017-2-2H4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"/><path d="M15 21c3 0 7-1 7-8V5c0-1.25-.757-2.017-2-2h-4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2h.75c0 2.25.25 4-2.75 4v3c0 1 0 1 1 1z"/></svg></span>
+                  <span class="rb2-lbl">Cita</span>
+                </button>
+                <button class="rb2" onclick="iB('code')">
+                  <span class="rb2-ico"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg></span>
+                  <span class="rb2-lbl">Código</span>
+                </button>
+                <button class="rb2" onclick="si('info')">
+                  <span class="rb2-ico"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg></span>
+                  <span class="rb2-lbl">Info</span>
+                </button>
+                <button class="rb2" onclick="si('warn')">
+                  <span class="rb2-ico"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></span>
+                  <span class="rb2-lbl">Alerta</span>
+                </button>
+                <button class="rb2" onclick="si('divider')">
+                  <span class="rb2-ico"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round"><line x1="3" y1="12" x2="21" y2="12"/></svg></span>
+                  <span class="rb2-lbl">Separador</span>
+                </button>
               </div>
             </div>
+
             <div class="rib-vdiv-outer"></div>
+
             <div class="rib-group">
               <div class="rib-group-label">Multimedia</div>
               <div class="rib-btns">
-                <button class="rb2" onclick="insertMedia('image')" title="Imagen"><span class="rb2-ico">🖼</span><span class="rb2-lbl">Imagen</span></button>
-                <button class="rb2" onclick="insertMedia('video')" title="Video"><span class="rb2-ico">🎬</span><span class="rb2-lbl">Video</span></button>
-                <button class="rb2" onclick="insertMedia('audio')" title="Audio"><span class="rb2-ico">🎵</span><span class="rb2-lbl">Audio</span></button>
-                <button class="rb2" onclick="triggerFileInput()" title="Archivo adjunto"><span class="rb2-ico">📎</span><span class="rb2-lbl">Archivo</span></button>
+                <button class="rb2" onclick="insertMedia('image')">
+                  <span class="rb2-ico"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg></span>
+                  <span class="rb2-lbl">Imagen</span>
+                </button>
+                <button class="rb2" onclick="insertMedia('video')">
+                  <span class="rb2-ico"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2"/></svg></span>
+                  <span class="rb2-lbl">Video</span>
+                </button>
+                <button class="rb2" onclick="insertMedia('audio')">
+                  <span class="rb2-ico"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg></span>
+                  <span class="rb2-lbl">Audio</span>
+                </button>
+                <button class="rb2" onclick="triggerFileInput()">
+                  <span class="rb2-ico"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21.44 11.05l-9.19 9.19a6 6 0 0 1-8.49-8.49l9.19-9.19a4 4 0 0 1 5.66 5.66l-9.2 9.19a2 2 0 0 1-2.83-2.83l8.49-8.48"/></svg></span>
+                  <span class="rb2-lbl">Archivo</span>
+                </button>
               </div>
             </div>
+
             <div class="rib-vdiv-outer"></div>
+
             <div class="rib-group">
               <div class="rib-group-label">Vínculos</div>
               <div class="rib-btns">
-                <button class="rb2" onclick="startWL()" title="Enlazar nota"><span class="rb2-ico">⟦⟧</span><span class="rb2-lbl">Enlazar</span></button>
-                <button class="rb2" onclick="si('date')" title="Fecha hoy"><span class="rb2-ico">📅</span><span class="rb2-lbl">Fecha</span></button>
-                <button class="rb2" onclick="insertMeetingTemplate()" title="Reunión"><span class="rb2-ico">🤝</span><span class="rb2-lbl">Reunión</span></button>
+                <button class="rb2" onclick="startWL()">
+                  <span class="rb2-ico"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></span>
+                  <span class="rb2-lbl">Enlazar</span>
+                </button>
+                <button class="rb2" onclick="si('date')">
+                  <span class="rb2-ico"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></span>
+                  <span class="rb2-lbl">Fecha</span>
+                </button>
+                <button class="rb2" onclick="insertMeetingTemplate()">
+                  <span class="rb2-ico"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></span>
+                  <span class="rb2-lbl">Reunión</span>
+                </button>
               </div>
             </div>
+
             <div class="rib-vdiv-outer"></div>
+
             <div class="rib-group">
               <div class="rib-group-label">Importar</div>
               <div class="rib-btns">
-                <button class="rb2" onclick="importIntoNote()" title="Traer contenido a esta nota"><span class="rb2-ico">📥</span><span class="rb2-lbl">Desde archivo</span></button>
+                <button class="rb2" onclick="importIntoNote()">
+                  <span class="rb2-ico"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg></span>
+                  <span class="rb2-lbl">Desde archivo</span>
+                </button>
               </div>
             </div>
-          </div>
-          <!-- VISTA -->
+
+          </div><!-- /rp-insertar -->
+
+          <!-- ── VISTA ── -->
           <div class="rib-panel" id="rp-vista" style="display:none">
+
             <div class="rib-group">
-              <div class="rib-group-label">Notas</div>
+              <div class="rib-group-label">Ventanas</div>
               <div class="rib-btns">
-                <button class="rb2" onclick="toggleSecondPane()" id="btn-split-pane" title="Abrir segunda nota"><span class="rb2-ico">⧉</span><span class="rb2-lbl">Dividir</span></button>
+                <button class="rb2" onclick="toggleSecondPane()" id="btn-split-pane">
+                  <span class="rb2-ico"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="12" y1="3" x2="12" y2="21"/></svg></span>
+                  <span class="rb2-lbl">Dividir</span>
+                </button>
               </div>
             </div>
+
             <div class="rib-vdiv-outer"></div>
+
             <div class="rib-group">
               <div class="rib-group-label">Mostrar</div>
               <div class="rib-btns">
-                <button class="rb2" onclick="toggleLineno()" id="btn-lineno" title="Números de línea"><span class="rb2-ico">¶</span><span class="rb2-lbl">Nº línea</span></button>
+                <button class="rb2" onclick="toggleLineno()" id="btn-lineno">
+                  <span class="rb2-ico"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round"><line x1="9" y1="6" x2="20" y2="6"/><line x1="9" y1="12" x2="20" y2="12"/><line x1="9" y1="18" x2="20" y2="18"/><path d="M4 6h1v3" stroke-width="1.5"/><path d="M3 11h2" stroke-width="1.5"/><path d="M3 16h2v1.5L3 19h2" stroke-width="1.5"/></svg></span>
+                  <span class="rb2-lbl">Nº línea</span>
+                </button>
               </div>
             </div>
+
             <div class="rib-vdiv-outer"></div>
+
             <div class="rib-group">
               <div class="rib-group-label">Exportar</div>
               <div class="rib-btns">
-                <button class="rb2" onclick="exportPDF()" title="Exportar PDF"><span class="rb2-ico">📄</span><span class="rb2-lbl">PDF</span></button>
-                <button class="rb2" onclick="exportWord()" title="Exportar Word"><span class="rb2-ico">📝</span><span class="rb2-lbl">Word</span></button>
-                <button class="rb2" onclick="printNote()" title="Imprimir"><span class="rb2-ico">🖨</span><span class="rb2-lbl">Imprimir</span></button>
+                <button class="rb2" onclick="exportPDF()">
+                  <span class="rb2-ico"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><path d="M9 15h1.5a1.5 1.5 0 0 0 0-3H9v6m7-6v6m-2.5-3h2.5"/></svg></span>
+                  <span class="rb2-lbl">PDF</span>
+                </button>
+                <button class="rb2" onclick="exportWord()">
+                  <span class="rb2-ico"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><path d="M8 13l2 6 2-4 2 4 2-6"/></svg></span>
+                  <span class="rb2-lbl">Word</span>
+                </button>
+                <button class="rb2" onclick="printNote()">
+                  <span class="rb2-ico"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg></span>
+                  <span class="rb2-lbl">Imprimir</span>
+                </button>
               </div>
             </div>
-          </div>
-        </div>
+
+          </div><!-- /rp-vista -->
+        </div><!-- /ribbon -->
 
         <!-- NOTE HEADER -->
         <div class="note-head">
@@ -1032,7 +1179,7 @@ input, textarea, select { font-family: var(--ui) }
 
       <!-- CREDITS FOOTER (non-editable) -->
       <div style="padding:6px 16px;border-top:1px solid var(--border);display:flex;align-items:center;justify-content:flex-end;flex-shrink:0;user-select:none;pointer-events:none">
-        <span style="font-size:10px;color:var(--border2);letter-spacing:.2px">✱notas. · Eduardo Loo · v2.3</span>
+        <span style="font-size:10px;color:var(--border2);letter-spacing:.2px">✱notas. · eloo · v2.5</span>
       </div>
 
       <!-- SPLIT VIEWER -->
@@ -1230,7 +1377,7 @@ input, textarea, select { font-family: var(--ui) }
       <!-- Acerca de -->
       <div style="text-align:center;padding:8px 0">
         <div style="font-size:18px;font-weight:700;letter-spacing:-.5px;margin-bottom:4px">✱<span style="color:var(--accent)">loo.</span></div>
-        <div style="font-size:11px;color:var(--t3)">v2.0 · Diseñado por Eduardo Loo · 2025</div>
+        <div style="font-size:11px;color:var(--t3)">v2.5 · eloo</div>
       </div>
     </div>
   </div>
@@ -2929,28 +3076,33 @@ function openRCMenu(e) {
     return;
   }
   rcTarget = e.target;
+  // Save selection range NOW before any menu click loses it
+  const selNow = window.getSelection();
+  if(selNow && selNow.rangeCount > 0) {
+    _savedRange = selNow.getRangeAt(0).cloneRange();
+  }
   // Check if text is selected
   const sel = window.getSelection();
   const hasSelection = sel && sel.toString().trim().length > 0;
   const menu = document.getElementById('rc-menu');
   // Build dynamic menu
   const textSec = hasSelection ? `
-    <div class="rc-sub">Texto seleccionado</div>
-    <div class="rc-item" onclick="ef('bold');closeRCMenu()"><strong>N</strong> Negrita</div>
-    <div class="rc-item" onclick="ef('italic');closeRCMenu()"><em>I</em> Cursiva</div>
-    <div class="rc-item" onclick="ef('underline');closeRCMenu()"><span style='text-decoration:underline'>S</span> Subrayado</div>
-    <div class="rc-item" onclick="ef('strikeThrough');closeRCMenu()"><s>S</s> Tachado</div>
-    <div style="padding:3px 8px 2px;display:flex;gap:4px;flex-wrap:wrap">
-      <div style="width:18px;height:18px;border-radius:4px;background:var(--hl);cursor:pointer;border:1px solid rgba(0,0,0,.1)" onclick="hl();closeRCMenu()" title="Resaltar"></div>
-      <div style="width:14px;height:14px;border-radius:50%;background:#1c1c1e;cursor:pointer" onclick="clrTxt('#1c1c1e');closeRCMenu()" title="Negro"></div>
-      <div style="width:14px;height:14px;border-radius:50%;background:#1d4ed8;cursor:pointer" onclick="clrTxt('#1d4ed8');closeRCMenu()" title="Azul"></div>
-      <div style="width:14px;height:14px;border-radius:50%;background:#dc2626;cursor:pointer" onclick="clrTxt('#dc2626');closeRCMenu()" title="Rojo"></div>
-      <div style="width:14px;height:14px;border-radius:50%;background:transparent;border:1px solid var(--border2);cursor:pointer;font-size:8px;display:flex;align-items:center;justify-content:center;color:var(--t3)" onclick="document.execCommand('removeFormat');closeRCMenu()" title="Quitar">✕</div>
-      <div style="width:16px;height:16px;border-radius:3px;background:var(--s3);border:1px solid #ccc;cursor:pointer;font-size:9px;display:flex;align-items:center;justify-content:center" onclick="document.execCommand('removeFormat');closeRCMenu()" title="Quitar formato">✕</div>
+    <div class="rc-sub">Formato</div>
+    <div class="rc-item" onmousedown="event.preventDefault();ef('bold');closeRCMenu()"><strong style="font-size:13px">N</strong>&nbsp; Negrita</div>
+    <div class="rc-item" onmousedown="event.preventDefault();ef('italic');closeRCMenu()"><em style="font-size:13px">I</em>&nbsp; Cursiva</div>
+    <div class="rc-item" onmousedown="event.preventDefault();ef('underline');closeRCMenu()"><span style='text-decoration:underline'>S</span>&nbsp; Subrayado</div>
+    <div class="rc-item" onmousedown="event.preventDefault();ef('strikeThrough');closeRCMenu()"><s>S</s>&nbsp; Tachado</div>
+    <div style="padding:5px 12px 3px;display:flex;gap:7px;align-items:center">
+      <div style="width:20px;height:13px;border-radius:3px;background:var(--hl);cursor:pointer;border:1.5px solid rgba(0,0,0,.1)" onmousedown="event.preventDefault();hl();closeRCMenu()" title="Resaltar"></div>
+      <div style="width:14px;height:14px;border-radius:50%;background:#1d1d1f;cursor:pointer" onmousedown="event.preventDefault();clrTxt('#1d1d1f');closeRCMenu()" title="Negro"></div>
+      <div style="width:14px;height:14px;border-radius:50%;background:#1a56db;cursor:pointer" onmousedown="event.preventDefault();clrTxt('#1a56db');closeRCMenu()" title="Azul"></div>
+      <div style="width:14px;height:14px;border-radius:50%;background:#c0392b;cursor:pointer" onmousedown="event.preventDefault();clrTxt('#c0392b');closeRCMenu()" title="Rojo"></div>
+      <div style="width:14px;height:14px;border-radius:50%;background:transparent;border:1.5px solid var(--border2);cursor:pointer;font-size:8px;display:flex;align-items:center;justify-content:center;color:var(--t3)" onmousedown="event.preventDefault();document.execCommand('removeFormat');closeRCMenu()" title="Quitar formato">✕</div>
     </div>
-    <div class="rc-item" onclick="document.execCommand('copy');closeRCMenu()">⎘ Copiar</div>
-    <div class="rc-item" onclick="document.execCommand('cut');closeRCMenu()">✂ Cortar</div>
-    <div class="rc-item" onclick="makeSupertag();closeRCMenu()" style="color:var(--accent);font-weight:600">✱ Convertir en supertag</div>
+    <div class="rc-sep"></div>
+    <div class="rc-item" onmousedown="event.preventDefault();document.execCommand('copy');closeRCMenu()">Copiar</div>
+    <div class="rc-item" onmousedown="event.preventDefault();document.execCommand('cut');closeRCMenu()">Cortar</div>
+    <div class="rc-item" onmousedown="event.preventDefault();makeSupertag();closeRCMenu()" style="color:var(--accent);font-weight:600">✱ Supertag</div>
     <div class="rc-sep"></div>` : '';
   menu.innerHTML = textSec + `
     <div class="rc-sub">Formato de bloque</div>
@@ -2963,7 +3115,7 @@ function openRCMenu(e) {
     <div class="rc-item" onclick="bswRC('quote')">❝ Cita</div>
     <div class="rc-item" onclick="bswRC('code')">{} Código</div>
     <div class="rc-sep"></div>
-    <div class="rc-item" onclick="addComment();closeRCMenu()">💬 Agregar comentario</div>
+    <div class="rc-item" onmousedown="event.preventDefault();addComment()">💬 Agregar comentario</div>
     <div class="rc-sep"></div>
     <div class="rc-item danger" onclick="rcDelete()">🗑 Eliminar nota</div>`;
   menu.style.left = Math.min(e.clientX, window.innerWidth-220) + 'px';
@@ -2984,8 +3136,17 @@ function toggleComments() {
 }
 
 function addComment() {
+  // Restore saved selection (lost when right-click menu appeared)
   const sel = window.getSelection();
-  if(!sel || sel.isCollapsed || !sel.toString().trim()) {
+  let range = null;
+  if(_savedRange) {
+    sel.removeAllRanges();
+    sel.addRange(_savedRange);
+    range = _savedRange;
+  } else if(sel && sel.rangeCount > 0 && !sel.isCollapsed) {
+    range = sel.getRangeAt(0);
+  }
+  if(!range || range.collapsed || !sel.toString().trim()) {
     toast('Selecciona texto primero para comentar');
     return;
   }
@@ -2995,7 +3156,6 @@ function addComment() {
   if(!comment?.trim()) return;
   // Wrap selection in comment span
   try {
-    const range = sel.getRangeAt(0);
     const span = document.createElement('span');
     span.className = 'note-comment';
     span.dataset.comment = comment.trim();
