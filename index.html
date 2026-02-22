@@ -8,24 +8,36 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
 :root {
-  --bg:#f4f4f2; --surface:#ffffff; --s2:#f9f9f8; --s3:#f0f0ee;
-  --border:#e8e8e5; --border2:#d5d5d0;
-  --text:#1a1a18; --t2:#52524f; --t3:#9b9b97;
-  --accent:#2563eb; --a-bg:#eff6ff; --a-hover:#dbeafe;
-  --shadow:0 2px 8px rgba(0,0,0,.08); --shadow-lg:0 8px 24px rgba(0,0,0,.12);
-  --radius:7px; --font:'Inter',sans-serif;
+  --bg:#f5f5f7;
+  --surface:#ffffff;
+  --s2:#fbfbfd;
+  --s3:#f2f2f7;
+  --border:rgba(0,0,0,.08);
+  --border2:rgba(0,0,0,.14);
+  --text:#1d1d1f;
+  --t2:#424245;
+  --t3:#86868b;
+  --accent:#0071e3;
+  --a-bg:#e8f0fd;
+  --a-hover:#d2e4fb;
+  --shadow:0 1px 3px rgba(0,0,0,.06),0 4px 12px rgba(0,0,0,.06);
+  --shadow-lg:0 8px 30px rgba(0,0,0,.12);
+  --shadow-xl:0 20px 60px rgba(0,0,0,.15);
+  --radius:10px;
+  --font:-apple-system,BlinkMacSystemFont,'SF Pro Text','Helvetica Neue',sans-serif;
+  --font-display:-apple-system,BlinkMacSystemFont,'SF Pro Display','Helvetica Neue',sans-serif;
 }
 *{box-sizing:border-box;margin:0;padding:0}
-body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:14px;-webkit-font-smoothing:antialiased;display:flex;flex-direction:column;height:100vh;overflow:hidden}
+body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:14px;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;display:flex;flex-direction:column;height:100vh;overflow:hidden}
 button{cursor:pointer;border:none;background:none;font-family:var(--font)}
 input,textarea,select{font-family:var(--font)}
 
 /* ── TOP BAR ── */
-.topbar{height:40px;background:var(--surface);border-bottom:1px solid var(--border);display:flex;align-items:center;padding:0 12px;gap:8px;flex-shrink:0;z-index:100}
-.logo{font-size:16px;font-weight:700;letter-spacing:-.5px;color:var(--text);margin-right:4px}
+.topbar{height:44px;background:rgba(255,255,255,.82);backdrop-filter:saturate(180%) blur(20px);-webkit-backdrop-filter:saturate(180%) blur(20px);border-bottom:1px solid rgba(0,0,0,.08);display:flex;align-items:center;padding:0 14px;gap:8px;flex-shrink:0;z-index:100}
+.logo{font-size:16px;font-weight:700;letter-spacing:-.8px;color:var(--text);margin-right:4px;font-family:var(--font-display)}
 .logo span{color:var(--accent)}
-.tb{padding:4px 10px;font-size:12px;font-weight:500;border-radius:5px;color:var(--t2);transition:all .1s}
-.tb:hover{background:var(--s3);color:var(--text)}
+.tb{padding:5px 11px;font-size:12px;font-weight:500;border-radius:7px;color:var(--t2);transition:all .12s;letter-spacing:-.1px}
+.tb:hover{background:rgba(0,0,0,.05);color:var(--text)}
 .tb.on{background:var(--a-bg);color:var(--accent)}
 .tb-sep{width:1px;height:18px;background:var(--border);margin:0 2px}
 .tb-r{margin-left:auto;display:flex;align-items:center;gap:4px}
@@ -36,16 +48,16 @@ input,textarea,select{font-family:var(--font)}
 .workspace{display:flex;flex:1;overflow:hidden}
 
 /* ── RAIL ── */
-.rail{width:44px;background:var(--s2);border-right:1px solid var(--border);display:flex;flex-direction:column;align-items:center;padding:8px 0;gap:2px;flex-shrink:0}
-.rb{width:34px;height:34px;border-radius:7px;font-size:16px;color:var(--t3);display:flex;align-items:center;justify-content:center;position:relative;transition:all .1s}
-.rb:hover{background:var(--s3);color:var(--text)}
+.rail{width:48px;background:rgba(255,255,255,.7);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-right:1px solid var(--border);display:flex;flex-direction:column;align-items:center;padding:10px 0;gap:3px;flex-shrink:0}
+.rb{width:36px;height:36px;border-radius:9px;font-size:17px;color:var(--t3);display:flex;align-items:center;justify-content:center;position:relative;transition:all .15s}
+.rb:hover{background:rgba(0,0,0,.06);color:var(--text)}
 .rb.on{background:var(--a-bg);color:var(--accent)}
 .rb .tip{display:none;position:fixed;background:var(--text);color:#fff;padding:4px 10px;border-radius:5px;font-size:11px;font-weight:500;white-space:nowrap;pointer-events:none;z-index:9999;margin-left:6px;box-shadow:0 2px 8px rgba(0,0,0,.2)}
 .rb:hover .tip{display:block}
 .rb-sep{height:1px;width:24px;background:var(--border);margin:4px 0}
 
 /* ── SIDEBAR ── */
-.sb{width:220px;border-right:1px solid var(--border);display:flex;flex-direction:column;overflow:hidden;background:var(--s2);transition:width .18s;flex-shrink:0}
+.sb{width:228px;border-right:1px solid var(--border);display:flex;flex-direction:column;overflow:hidden;background:rgba(250,250,252,.95);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);transition:width .2s cubic-bezier(.4,0,.2,1);flex-shrink:0}
 .sb.closed{width:0}
 .sb-top{padding:9px 9px 5px;flex-shrink:0}
 .sb-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:6px}
@@ -57,9 +69,9 @@ input,textarea,select{font-family:var(--font)}
 .sb-body{flex:1;overflow-y:auto;padding:2px 5px 12px}
 
 /* ── NOTE ROWS ── */
-.nr{padding:7px 8px;border-radius:6px;cursor:pointer;margin-bottom:2px;border:1px solid transparent;transition:all .1s}
-.nr:hover{background:var(--s3)}
-.nr.on{background:var(--surface);border-color:var(--border);box-shadow:0 1px 3px rgba(0,0,0,.06)}
+.nr{padding:8px 9px;border-radius:9px;cursor:pointer;margin-bottom:2px;border:1px solid transparent;transition:all .12s}
+.nr:hover{background:rgba(0,0,0,.04)}
+.nr.on{background:var(--surface);border-color:var(--border);box-shadow:0 1px 4px rgba(0,0,0,.08)}
 .nr-title{font-size:12px;font-weight:500;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;display:flex;align-items:center;gap:4px}
 .nr-title span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .nr-prev{font-size:10px;color:var(--t3);margin-top:1px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
@@ -119,7 +131,7 @@ input,textarea,select{font-family:var(--font)}
 #ew{display:none;flex-direction:column;flex:1;overflow:hidden;min-height:0}
 
 /* ── RIBBON ── */
-.ribbon{flex-shrink:0;border-bottom:1px solid var(--border);background:var(--surface)}
+.ribbon{flex-shrink:0;border-bottom:1px solid var(--border);background:rgba(255,255,255,.92);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px)}
 .rib-tabs{display:flex;border-bottom:1px solid var(--border);padding:0 8px;align-items:center}
 .rib-tab{padding:5px 14px;font-size:11px;font-weight:600;border-bottom:2px solid transparent;color:var(--t2);transition:all .1s}
 .rib-tab:hover{color:var(--text)}
@@ -131,8 +143,8 @@ input,textarea,select{font-family:var(--font)}
 .rib-btns{display:flex;gap:1px;align-items:center;flex-wrap:wrap}
 .rib-vdiv-outer{width:1px;background:var(--border);margin:2px 6px;align-self:stretch}
 .rib-vdiv{width:1px;height:16px;background:var(--border);margin:0 3px}
-.rb2{display:flex;flex-direction:column;align-items:center;gap:1px;padding:4px 6px;border-radius:5px;font-size:12px;color:var(--t2);min-width:36px;transition:all .1s;white-space:nowrap}
-.rb2:hover{background:var(--s3);color:var(--text)}
+.rb2{display:flex;flex-direction:column;align-items:center;gap:1px;padding:4px 7px;border-radius:7px;font-size:12px;color:var(--t2);min-width:36px;transition:all .12s;white-space:nowrap}
+.rb2:hover{background:rgba(0,0,0,.05);color:var(--text)}
 .rb2.on{background:var(--a-bg);color:var(--accent)}
 .rb2-ico{font-size:15px;line-height:1}
 .rb2-lbl{font-size:9px;font-weight:500;color:var(--t3);line-height:1}
@@ -164,7 +176,7 @@ input,textarea,select{font-family:var(--font)}
 /* ── EDITOR ── */
 .lw{flex:1;overflow-y:auto;padding:0 16px 40px;position:relative}
 .line-numbers{position:absolute;left:0;top:0;width:36px;padding:0 6px 0 4px;text-align:right;font-size:11px;color:var(--t3);font-family:monospace;pointer-events:none;line-height:1.8;display:none}
-.le{outline:none;min-height:100%;padding:12px 0;line-height:1.75;font-size:14px;color:var(--text)}
+.le{outline:none;min-height:100%;padding:16px 0;line-height:1.8;font-size:15px;color:var(--text);letter-spacing:-.1px}
 .le h1{font-size:22px;font-weight:700;margin:16px 0 8px;line-height:1.3}
 .le h2{font-size:18px;font-weight:600;margin:14px 0 6px;line-height:1.35}
 .le h3{font-size:15px;font-weight:600;margin:12px 0 4px;line-height:1.4}
@@ -186,7 +198,7 @@ input,textarea,select{font-family:var(--font)}
 .le .warn-block{background:#fffbeb;border:1px solid #fde68a;border-radius:6px;padding:10px 14px;margin:8px 0;font-size:13px}
 
 /* SUPERTAG BLOCK IN EDITOR */
-.stag-block{border-left:3px solid var(--accent);background:var(--a-bg);border-radius:0 7px 7px 0;padding:10px 14px;margin:8px 0;outline:none;position:relative;min-height:32px;display:block}
+.stag-block{border-left:3px solid var(--accent);background:rgba(0,113,227,.05);border-radius:0 10px 10px 0;padding:12px 16px;margin:10px 0;outline:none;position:relative;min-height:36px;display:block}
 .stag-block:focus{box-shadow:0 0 0 2px rgba(37,99,235,.2)}
 .stag-block::before{content:'✱';position:absolute;left:-14px;top:10px;color:var(--accent);font-size:11px;font-weight:700}
 .stag-block:empty::after{content:'Escribe tu nota destacada…';color:var(--t3);font-style:italic;pointer-events:none}
@@ -203,6 +215,12 @@ input,textarea,select{font-family:var(--font)}
 .fcard-name{font-size:12px;font-weight:500;color:var(--text);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .fcard-meta{font-size:10px;color:var(--t3)}
 .fcard-img{max-width:100%;max-height:80px;border-radius:4px;object-fit:cover}
+.le img{max-width:100%;border-radius:8px;cursor:pointer;display:block;margin:6px 0}
+.le img.selected{outline:2px solid var(--accent);outline-offset:2px}
+.img-wrap{position:relative;display:inline-block;margin:6px 0;max-width:100%}
+.img-wrap img{display:block;border-radius:8px}
+.img-resize-handle{position:absolute;bottom:4px;right:4px;width:14px;height:14px;background:var(--accent);border-radius:3px;cursor:se-resize;opacity:0;transition:opacity .15s}
+.img-wrap:hover .img-resize-handle{opacity:.8}
 .fcard-video{max-width:100%;max-height:80px;border-radius:4px}
 
 /* ── BACKLINKS ── */
@@ -227,7 +245,7 @@ input,textarea,select{font-family:var(--font)}
 .ep-b-title{flex:1;font-size:13px;font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 
 /* ── CTX MENU (selection toolbar) ── */
-.ctx{position:fixed;background:var(--surface);border:1px solid var(--border);border-radius:8px;box-shadow:var(--shadow);z-index:600;padding:3px;display:none;flex-direction:row;align-items:center;gap:1px;animation:fadeUp .12s ease}
+.ctx{position:fixed;background:rgba(255,255,255,.95);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border:1px solid rgba(0,0,0,.08);border-radius:10px;box-shadow:0 4px 20px rgba(0,0,0,.12);z-index:600;padding:4px;display:none;flex-direction:row;align-items:center;gap:1px;animation:fadeUp .1s ease}
 .ctx.open{display:flex}
 .cx{padding:5px 7px;border-radius:5px;font-size:12px;color:var(--t2);transition:all .1s}
 .cx:hover{background:var(--s3);color:var(--text)}
@@ -238,7 +256,7 @@ input,textarea,select{font-family:var(--font)}
 .tip{font-size:10px;padding:2px 6px;background:var(--text);color:#fff;border-radius:3px;position:absolute;bottom:100%;left:50%;transform:translateX(-50%);white-space:nowrap;pointer-events:none;display:none;margin-bottom:4px}
 
 /* ── SLASH MENU ── */
-.slash{position:fixed;background:var(--surface);border:1px solid var(--border);border-radius:8px;box-shadow:var(--shadow-lg);z-index:700;width:270px;max-height:380px;overflow-y:auto;display:none;padding:4px;animation:fadeUp .12s ease}
+.slash{position:fixed;background:rgba(255,255,255,.96);backdrop-filter:blur(30px);-webkit-backdrop-filter:blur(30px);border:1px solid rgba(0,0,0,.08);border-radius:13px;box-shadow:0 8px 30px rgba(0,0,0,.14);z-index:700;width:280px;max-height:380px;overflow-y:auto;display:none;padding:5px;animation:fadeUp .1s ease}
 .slash.open{display:block}
 .s-sec{font-size:9px;font-weight:700;color:var(--t3);letter-spacing:.6px;text-transform:uppercase;padding:8px 10px 3px}
 .s-item{padding:6px 10px;cursor:pointer;display:flex;align-items:center;gap:9px;border-radius:5px;transition:background .08s}
@@ -341,7 +359,7 @@ input,textarea,select{font-family:var(--font)}
 /* ── MODAL ── */
 .modal-bg{position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:900;display:none;align-items:center;justify-content:center;animation:fadeIn .15s ease}
 .modal-bg.open{display:flex}
-.modal{background:var(--surface);border-radius:12px;padding:20px;width:320px;box-shadow:var(--shadow-lg)}
+.modal{background:rgba(255,255,255,.96);backdrop-filter:blur(40px);-webkit-backdrop-filter:blur(40px);border-radius:16px;padding:24px;width:340px;box-shadow:var(--shadow-xl);border:1px solid rgba(255,255,255,.8)}
 .modal h3{font-size:15px;font-weight:600;margin-bottom:14px}
 .modal input,.modal select{width:100%;border:1px solid var(--border);border-radius:6px;padding:8px 10px;font-size:13px;font-family:var(--font);outline:none;margin-bottom:10px;color:var(--text);background:var(--surface)}
 .modal input:focus,.modal select:focus{border-color:var(--accent)}
@@ -353,8 +371,24 @@ input,textarea,select{font-family:var(--font)}
 .modal-btn.sec:hover{background:var(--border)}
 
 /* ── TOAST ── */
-#toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%) translateY(8px);background:var(--text);color:#fff;padding:7px 16px;border-radius:20px;font-size:12px;font-weight:500;opacity:0;transition:all .25s;pointer-events:none;z-index:1000;white-space:nowrap}
+#toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(8px);background:rgba(29,29,31,.88);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);color:#fff;padding:8px 18px;border-radius:20px;font-size:12px;font-weight:500;letter-spacing:-.1px;opacity:0;transition:all .25s cubic-bezier(.4,0,.2,1);pointer-events:none;z-index:1000;white-space:nowrap}
 #toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+
+/* ── RESOURCES PANEL ── */
+.resources-bar{border-top:1px solid var(--border);padding:8px 16px;background:rgba(250,250,252,.8);flex-shrink:0}
+.res-head{display:flex;align-items:center;gap:6px;cursor:pointer;padding:4px 0}
+.res-title{font-size:11px;font-weight:600;color:var(--t3);text-transform:uppercase;letter-spacing:.6px;flex:1}
+.res-count{font-size:10px;background:var(--a-bg);color:var(--accent);padding:1px 6px;border-radius:10px;font-weight:600}
+.res-add{font-size:11px;padding:3px 9px;border-radius:6px;background:var(--accent);color:#fff;font-weight:600;border:none;cursor:pointer;transition:opacity .1s}
+.res-add:hover{opacity:.85}
+.res-body{display:none;margin-top:6px;display:flex;flex-wrap:wrap;gap:6px;padding:4px 0}
+.res-item{display:flex;align-items:center;gap:6px;padding:6px 10px;background:var(--surface);border:1px solid var(--border);border-radius:8px;cursor:pointer;transition:all .12s;max-width:220px}
+.res-item:hover{border-color:var(--accent);background:var(--a-bg)}
+.res-item-icon{font-size:18px;flex-shrink:0}
+.res-item-name{font-size:11px;font-weight:500;color:var(--text);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:140px}
+.res-item-size{font-size:10px;color:var(--t3)}
+.res-empty{font-size:12px;color:var(--t3);padding:8px 0;font-style:italic}
 
 /* ── SCROLLBAR ── */
 ::-webkit-scrollbar{width:5px;height:5px}
@@ -681,6 +715,17 @@ input,textarea,select{font-family:var(--font)}
           <div class="bl-body" id="bl-body" style="display:none"></div>
         </div>
       </div><!-- /ew -->
+
+      <!-- RESOURCES BAR -->
+      <div class="resources-bar" id="resources-bar" style="display:none">
+        <div class="res-head" onclick="toggleResources()">
+          <span class="res-title">📎 Recursos</span>
+          <span class="res-count" id="res-count">0</span>
+          <button class="res-add" onclick="triggerFileInput();event.stopPropagation()">+ Agregar</button>
+          <span style="font-size:10px;color:var(--t3);margin-left:6px" id="res-arrow">▲</span>
+        </div>
+        <div id="res-body" class="res-body"></div>
+      </div>
 
       <!-- SPLIT VIEWER -->
       <div class="split-viewer" id="split-viewer" style="display:none">
@@ -1264,6 +1309,7 @@ function openNote(id) {
   const folder = folders.find(f => f.id === n.folder);
   document.getElementById('meta-folder').textContent = folder ? `📁 ${folder.name}` : '📁 Sin carpeta';
   renderTags(); renderBL(); updateWC(); updateLineNumbers(); attachWL();
+  renderResources();
   _highlightSBNote(id);
   if(todoVis) renderTodo();
   requestAnimationFrame(() => {
@@ -1812,6 +1858,108 @@ function fmtSize(b) {
   return (b/1024/1024).toFixed(1)+'MB';
 }
 
+// Resources stored per note in: note.resources = [{id,name,ext,size,dataUrl}]
+function renderResources() {
+  const n = notes.find(x => x.id === activeId);
+  const bar = document.getElementById('resources-bar');
+  if(!n) { if(bar) bar.style.display='none'; return; }
+  const res = n.resources || [];
+  bar.style.display = 'block';
+  document.getElementById('res-count').textContent = res.length;
+  const body = document.getElementById('res-body');
+  if(!res.length) {
+    body.innerHTML = '<div class="res-empty">Arrastra archivos aquí o usa "+ Agregar"</div>';
+  } else {
+    body.innerHTML = res.map(r => `
+      <div class="res-item" onclick="openResource('${r.id}')" oncontextmenu="ctxResource(event,'${r.id}');event.preventDefault()" title="${hesc(r.name)}">
+        <span class="res-item-icon">${getFileIcon(r.ext)}</span>
+        <div style="min-width:0">
+          <div class="res-item-name">${hesc(r.name)}</div>
+          <div class="res-item-size">${fmtSize(r.size)}</div>
+        </div>
+      </div>`).join('');
+  }
+  // Show body open by default if has items
+  body.style.display = res.length ? 'flex' : 'none';
+}
+
+function toggleResources() {
+  const body = document.getElementById('res-body');
+  const arrow = document.getElementById('res-arrow');
+  const open = body.style.display !== 'none';
+  body.style.display = open ? 'none' : 'flex';
+  if(arrow) arrow.textContent = open ? '▲' : '▼';
+}
+
+async function openResource(resId) {
+  const n = notes.find(x => x.id === activeId); if(!n) return;
+  const res = (n.resources||[]).find(r => r.id === resId); if(!res) return;
+  // Try IDB first, fall back to stored dataUrl
+  let dataUrl = res.dataUrl;
+  if(!dataUrl) {
+    const idbData = await idbGet(resId).catch(()=>null);
+    if(idbData) dataUrl = idbData.dataUrl;
+  }
+  if(!dataUrl) { toast('Archivo no disponible'); return; }
+  // Open in viewer or download
+  const ext = res.ext;
+  const isImg   = /^(jpg|jpeg|png|gif|webp|svg)$/.test(ext);
+  const isVid   = /^(mp4|webm|mov|avi|mkv)$/.test(ext);
+  const isAudio = /^(mp3|wav|ogg|m4a|aac|flac)$/.test(ext);
+  const isPDF   = ext === 'pdf';
+  if(isImg||isVid||isAudio||isPDF) {
+    openSVDirect(res.name, ext, dataUrl);
+  } else {
+    // Download
+    const a = document.createElement('a'); a.href = dataUrl; a.download = res.name; a.click();
+    toast('📥 Descargando ' + res.name);
+  }
+}
+
+function openSVDirect(name, ext, dataUrl) {
+  const sv = document.getElementById('split-viewer');
+  const svBody = document.getElementById('sv-body');
+  document.getElementById('sv-name').textContent = name;
+  const isImg   = /^(jpg|jpeg|png|gif|webp|svg)$/.test(ext);
+  const isVid   = /^(mp4|webm|mov|avi|mkv)$/.test(ext);
+  const isAudio = /^(mp3|wav|ogg|m4a|aac|flac)$/.test(ext);
+  const isPDF   = ext === 'pdf';
+  if(isImg)   svBody.innerHTML = `<img src="${dataUrl}" style="max-width:100%;border-radius:8px" alt="${hesc(name)}">`;
+  else if(isVid)   svBody.innerHTML = `<video src="${dataUrl}" controls style="max-width:100%;border-radius:8px"></video>`;
+  else if(isAudio) svBody.innerHTML = `<div style="padding:16px"><div style="font-size:14px;font-weight:500;margin-bottom:10px">🎵 ${hesc(name)}</div><audio src="${dataUrl}" controls style="width:100%"></audio></div>`;
+  else if(isPDF)   svBody.innerHTML = `<iframe src="${dataUrl}" style="width:100%;height:100%;border:none"></iframe>`;
+  sv.style.display = 'flex';
+}
+
+function ctxResource(e, resId) {
+  const n = notes.find(x => x.id === activeId); if(!n) return;
+  let m = document.getElementById('res-ctx-menu');
+  if(!m){ m=document.createElement('div'); m.id='res-ctx-menu'; document.body.appendChild(m); }
+  m.style.cssText='position:fixed;z-index:800;background:rgba(255,255,255,.96);backdrop-filter:blur(20px);border:1px solid rgba(0,0,0,.08);border-radius:10px;box-shadow:0 8px 24px rgba(0,0,0,.14);padding:4px;min-width:170px;animation:fadeUp .1s ease';
+  m.innerHTML=`<div onclick="openResource('${resId}')" style="padding:7px 12px;border-radius:7px;cursor:pointer;font-size:12px;color:var(--t2);display:flex;align-items:center;gap:8px" onmouseover="this.style.background='var(--a-bg)'" onmouseout="this.style.background=''">👁 Ver / Abrir</div>
+    <div onclick="downloadResource('${resId}')" style="padding:7px 12px;border-radius:7px;cursor:pointer;font-size:12px;color:var(--t2);display:flex;align-items:center;gap:8px" onmouseover="this.style.background='var(--a-bg)'" onmouseout="this.style.background=''">📥 Descargar</div>
+    <div style="height:1px;background:var(--border);margin:3px 0"></div>
+    <div onclick="deleteResource('${resId}')" style="padding:7px 12px;border-radius:7px;cursor:pointer;font-size:12px;color:#dc2626;display:flex;align-items:center;gap:8px" onmouseover="this.style.background='#fee2e2'" onmouseout="this.style.background=''">🗑 Eliminar recurso</div>`;
+  m.style.left=Math.min(e.clientX,window.innerWidth-185)+'px';
+  m.style.top=Math.min(e.clientY,window.innerHeight-130)+'px';
+  setTimeout(()=>document.addEventListener('mousedown',()=>m.remove(),{once:true}),10);
+}
+
+async function downloadResource(resId) {
+  const n = notes.find(x => x.id === activeId); if(!n) return;
+  const res = (n.resources||[]).find(r => r.id === resId); if(!res) return;
+  const dataUrl = res.dataUrl || (await idbGet(resId).catch(()=>null))?.dataUrl;
+  if(!dataUrl){ toast('Archivo no disponible'); return; }
+  const a=document.createElement('a'); a.href=dataUrl; a.download=res.name; a.click();
+}
+
+function deleteResource(resId) {
+  const n = notes.find(x => x.id === activeId); if(!n) return;
+  if(!confirm('¿Eliminar este recurso de la nota?')) return;
+  n.resources = (n.resources||[]).filter(r => r.id !== resId);
+  save(); renderResources(); toast('Recurso eliminado');
+}
+
 async function insertFileCard(file, dataUrl) {
   const fileId = 'f_'+Date.now();
   const ext  = getFileExt(file.name);
@@ -1825,12 +1973,10 @@ async function insertFileCard(file, dataUrl) {
 
   let cardHtml;
   if(isImg) {
-    cardHtml = `<div class="fcard" data-fileid="${fileId}" onclick="openSV('${fileId}')" oncontextmenu="showBlockCtxMenu(event,'🖼 Imagen',this);event.preventDefault()">
-      <img class="fcard-img" src="${dataUrl}" alt="${hesc(file.name)}" style="max-width:100%;max-height:120px;border-radius:5px;object-fit:cover">
-      <div class="fcard-info">
-        <div class="fcard-name">${hesc(file.name)}</div>
-        <div class="fcard-meta">${fmtSize(file.size)} · clic para ampliar</div>
-      </div>
+    cardHtml = `<div class="img-wrap" contenteditable="false" data-fileid="${fileId}" style="display:inline-block;max-width:100%">
+      <img src="${dataUrl}" alt="${hesc(file.name)}" style="width:100%;max-width:560px;border-radius:8px;display:block;cursor:pointer" onclick="openSV('${fileId}')" oncontextmenu="showBlockCtxMenu(event,'🖼 Imagen',this.closest('.img-wrap'));event.preventDefault()">
+      <div class="img-resize-handle" onmousedown="startImgResize(event,this.parentElement)"></div>
+      <div style="font-size:11px;color:var(--t3);padding:4px 2px">${hesc(file.name)} · ${fmtSize(file.size)}</div>
     </div>`;
   } else if(isVid) {
     cardHtml = `<div class="fcard" data-fileid="${fileId}" oncontextmenu="showBlockCtxMenu(event,'🎬 Video',this);event.preventDefault()" style="flex-direction:column;align-items:flex-start">
@@ -1869,10 +2015,23 @@ async function insertFileCard(file, dataUrl) {
     </div>`;
   }
 
-  const le = document.getElementById('le'); le.focus();
-  document.execCommand('insertHTML', false, cardHtml + '<p><br></p>');
+  if(isImg || isVid || isAudio) {
+    // Media goes inline in the note
+    const le = document.getElementById('le'); le.focus();
+    document.execCommand('insertHTML', false, cardHtml + '<p><br></p>');
+  } else {
+    // Documents (PDF, Word, etc.) go to Resources panel
+    const n = notes.find(x => x.id === activeId);
+    if(n) {
+      if(!n.resources) n.resources = [];
+      // Store dataUrl in IDB for larger files, keep small reference in note
+      await idbPut({ id:fileId, name:file.name, ext, size:file.size, dataUrl });
+      n.resources.push({ id:fileId, name:file.name, ext, size:file.size, dataUrl: file.size < 500000 ? dataUrl : null });
+      renderResources();
+    }
+  }
   schedSave();
-  toast('✓ Archivo adjuntado');
+  toast('✓ ' + (isImg||isVid||isAudio ? 'Multimedia insertado' : 'Archivo en Recursos'));
 }
 
 async function openSV(fileId) {
@@ -1931,7 +2090,10 @@ function onMediaInsert(input, type) {
     const le = document.getElementById('le'); le.focus();
     let html = '';
     if(type==='image') {
-      html = `<img src="${src}" alt="${hesc(file.name)}" style="max-width:100%;border-radius:6px;margin:4px 0"><p><br></p>`;
+      html = `<div class="img-wrap" contenteditable="false" style="display:inline-block;max-width:100%">
+        <img src="${src}" alt="${hesc(file.name)}" style="width:100%;max-width:560px;border-radius:8px;display:block" onclick="selectImg(this)">
+        <div class="img-resize-handle" onmousedown="startImgResize(event,this.parentElement)"></div>
+      </div><p><br></p>`;
     } else if(type==='video') {
       html = `<video src="${src}" controls style="max-width:100%;border-radius:6px;margin:4px 0"></video><p><br></p>`;
     } else if(type==='audio') {
@@ -2284,20 +2446,21 @@ function onTitle() {
 // ── RIGHT CLICK MENU ──
 // ═══════════════════════════════════════════════
 function openRCMenu(e) {
+  e.preventDefault();
+  e.stopPropagation();
   const fblock = e.target.closest('.fcard,.meeting-block,.stag-block');
   if(fblock) {
-    e.preventDefault();
     const label = fblock.classList.contains('stag-block') ? '✱ Supertag' :
                   fblock.classList.contains('meeting-block') ? '🤝 Reunión' : '📎 Archivo';
     showBlockCtxMenu(e.clientX, e.clientY, label, fblock);
     return;
   }
-  e.preventDefault();
-  rcTarget=e.target;
-  const menu=document.getElementById('rc-menu');
-  menu.style.left=Math.min(e.clientX,window.innerWidth-220)+'px';
-  menu.style.top=Math.min(e.clientY,window.innerHeight-320)+'px';
+  rcTarget = e.target;
+  const menu = document.getElementById('rc-menu');
+  menu.style.left = Math.min(e.clientX, window.innerWidth-220) + 'px';
+  menu.style.top  = Math.min(e.clientY, window.innerHeight-320) + 'px';
   menu.classList.add('open');
+  setTimeout(() => document.addEventListener('mousedown', closeRCMenu, {once:true}), 10);
 }
 function closeRCMenu() { document.getElementById('rc-menu').classList.remove('open'); }
 function rcDelete() { closeRCMenu(); deleteNote(); }
@@ -2919,6 +3082,29 @@ async function initApp() {
     if(event === 'SIGNED_OUT') { _currentUser=null; }
   });
 })();
+// ── IMAGE RESIZE ──
+function selectImg(img) {
+  document.querySelectorAll('#le img').forEach(i => i.classList.remove('selected'));
+  img.classList.add('selected');
+}
+function startImgResize(e, wrap) {
+  e.preventDefault(); e.stopPropagation();
+  const img = wrap.querySelector('img');
+  const startX = e.clientX;
+  const startW = img.offsetWidth;
+  const onMove = ev => {
+    const newW = Math.max(80, Math.min(startW + ev.clientX - startX, wrap.parentElement.offsetWidth));
+    img.style.width = newW + 'px'; img.style.maxWidth = 'none';
+  };
+  const onUp = () => {
+    document.removeEventListener('mousemove', onMove);
+    document.removeEventListener('mouseup', onUp);
+    schedSave();
+  };
+  document.addEventListener('mousemove', onMove);
+  document.addEventListener('mouseup', onUp);
+}
+
 // ── SETTINGS ──
 function toggleSettings() {
   const panel = document.getElementById('settings-panel');
