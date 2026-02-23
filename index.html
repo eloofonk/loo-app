@@ -12,10 +12,10 @@
    Clean, editorial, warm. Georgia for reading, system UI for chrome.
 ═══════════════════════════════════════════════════════════════ */
 :root {
-  --bg:        #f5f3ec;
+  --bg:        #ffffff;
   --surface:   #ffffff;
-  --s2:        #ebe9d6;
-  --s3:        #e4e2ce;
+  --s2:        #f5f5f5;
+  --s3:        #e8e8e8;
   --border:    rgba(0,0,0,.08);
   --border2:   rgba(0,0,0,.14);
   --text:      #111111;
@@ -656,7 +656,71 @@ input, textarea, select { font-family: var(--ui) }
 .cp-action  { padding: 6px; background: var(--surface); border: 1px solid var(--border); border-radius: 7px; font-size: 11px; color: var(--t2); text-align: left; transition: all .1s; font-family: var(--ui) }
 .cp-action:hover { border-color: var(--accent); color: var(--accent) }
 .mtg-timer  { font-size: 28px; font-weight: 700; text-align: center; padding: 12px; color: var(--text); font-family: var(--ui) }
-.mtg-transcript-box { min-height: 120px; max-height: 200px; overflow-y: auto; font-size: 11px; color: var(--t2); line-height: 1.6; background: var(--surface); border: 1px solid var(--border); border-radius: 6px; padding: 8px; margin: 8px 0; font-family: var(--ui) }
+.mtg-transcript-box {
+  flex: 1;
+  min-height: 200px;
+  max-height: calc(100vh - 320px);
+  overflow-y: auto;
+  font-size: 12px;
+  color: var(--text);
+  line-height: 1.75;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 12px;
+  margin: 8px 0;
+  font-family: var(--ui);
+}
+/* Speaker segments inside transcript */
+.mtg-seg {
+  margin-bottom: 10px;
+  padding: 6px 10px;
+  border-radius: 6px;
+  border-left: 3px solid var(--border2);
+  background: var(--bg3);
+}
+.mtg-seg-speaker {
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: .8px;
+  text-transform: uppercase;
+  margin-bottom: 3px;
+  color: var(--accent);
+}
+.mtg-seg-text {
+  font-size: 12px;
+  color: var(--text);
+  line-height: 1.65;
+}
+.mtg-seg-time {
+  font-size: 9px;
+  color: var(--t3);
+  margin-top: 3px;
+}
+.mtg-seg:nth-child(odd)  { border-left-color: var(--accent) }
+.mtg-seg:nth-child(even) { border-left-color: #888 }
+.mtg-interim {
+  color: var(--t3);
+  font-style: italic;
+  font-size: 11px;
+  padding: 4px 10px;
+  display: block;
+}
+/* Speaker count badge */
+.mtg-speakers-row {
+  display: flex; gap: 6px; flex-wrap: wrap;
+  margin: 4px 0 6px; align-items: center;
+}
+.mtg-speaker-badge {
+  font-size: 10px; font-weight: 600;
+  padding: 2px 8px; border-radius: 10px;
+  border: 1px solid var(--border);
+  color: var(--t2); background: var(--bg3);
+}
+.mtg-speaker-badge.s0 { border-color: var(--accent); color: var(--accent); background: var(--a-bg) }
+.mtg-speaker-badge.s1 { border-color: #888; color: #555 }
+.mtg-speaker-badge.s2 { border-color: #b06030; color: #b06030 }
+.mtg-speaker-badge.s3 { border-color: #308060; color: #308060 }
 .mtg-btns   { display: flex; gap: 6px }
 .mtg-btn    { flex: 1; padding: 8px; border-radius: 7px; font-size: 12px; font-weight: 500; transition: all .1s; font-family: var(--ui) }
 .mtg-btn.rec  { background: #dc2626; color: #fff }
@@ -726,6 +790,7 @@ input, textarea, select { font-family: var(--ui) }
 .font-sel:focus    { border-color: var(--accent) }
 
 /* ── ANIMATIONS ── */
+@keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
 @keyframes fadeUp  { from { opacity: 0; transform: translateY(5px) } to { opacity: 1; transform: translateY(0) } }
 @keyframes fadeIn  { from { opacity: 0 } to { opacity: 1 } }
 </style>
@@ -1285,16 +1350,28 @@ input, textarea, select { font-family: var(--ui) }
         </div>
         <div id="cp-msgs"></div>
       </div>
-      <div class="cp-body" id="cp-body-mtg">
-        <div class="mtg-timer" id="mtg-timer">0:00</div>
+      <div class="cp-body" id="cp-body-mtg" style="display:flex;flex-direction:column;gap:0;padding:10px 12px;overflow:hidden;height:100%">
+        <!-- Header row: timer + speaker badges -->
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:4px;flex-shrink:0">
+          <div style="display:flex;align-items:center;gap:8px">
+            <div class="mtg-timer" id="mtg-timer" style="font-size:18px;font-weight:700;font-family:var(--font-d);color:var(--text);letter-spacing:1px">0:00</div>
+            <div id="mtg-rec-indicator" style="display:none;width:8px;height:8px;border-radius:50%;background:#dc2626;animation:blink 1s infinite"></div>
+          </div>
+          <div class="mtg-speakers-row" id="mtg-speakers-row" style="margin:0"></div>
+        </div>
+        <!-- Transcript -->
         <div class="mtg-transcript-box" id="mtg-transcript-box">
-          <span style="color:var(--t3);font-style:italic">La transcripción aparecerá aquí mientras grabas…</span>
+          <span style="color:var(--t3);font-style:italic;font-size:12px">La transcripción aparecerá aquí mientras grabas…<br><br>💡 Tip: la grabación continúa sin límite de tiempo. Se identificarán los cambios de hablante automáticamente.</span>
         </div>
-        <div class="mtg-btns">
-          <button class="mtg-btn rec" id="mtg-rec-btn" onclick="toggleMtgRec()">⏺ Grabar</button>
-          <button class="mtg-btn stop" onclick="mtgSummarize()">✦ Resumir con Claude</button>
+        <!-- Controls -->
+        <div style="flex-shrink:0;margin-top:6px;display:flex;flex-direction:column;gap:5px">
+          <div class="mtg-btns" style="gap:6px">
+            <button class="mtg-btn rec" id="mtg-rec-btn" onclick="toggleMtgRec()" style="flex:1">⏺ Grabar</button>
+            <button class="mtg-btn stop" onclick="mtgSummarize()" style="flex:1">✦ Resumir</button>
+          </div>
+          <button onclick="mtgInsertToNote()" style="width:100%;padding:7px;border-radius:6px;border:1px solid var(--border);background:var(--surface);font-family:var(--ui);font-size:11px;font-weight:500;cursor:pointer;color:var(--t2);transition:all .12s" onmouseover="this.style.background='var(--s3)'" onmouseout="this.style.background='var(--surface)'">📥 Insertar en nota</button>
+          <button onclick="mtgClear()" style="width:100%;padding:6px;border-radius:6px;border:none;background:transparent;font-family:var(--ui);font-size:10px;font-weight:500;cursor:pointer;color:var(--t3)" onmouseover="this.style.color='var(--text)'" onmouseout="this.style.color='var(--t3)'">🗑 Limpiar transcripción</button>
         </div>
-        <button onclick="mtgInsertToNote()" style="width:100%;margin-top:6px;padding:7px;border-radius:6px;border:1px solid var(--border);background:var(--surface);font-family:var(--font);font-size:11px;font-weight:500;cursor:pointer;color:var(--t2)">📥 Insertar transcripción en nota</button>
       </div>
       <div class="cp-foot" id="cp-foot-chat">
         <textarea class="cp-in" id="cp-in" placeholder="Pregunta algo sobre tu nota…" rows="3"
@@ -1515,7 +1592,7 @@ let acNode = null, acStart = 0;
 let activePaneB = false, activeIdB = null, saveTB = null, _openNoteLastShift = false;
 let tagCtxNoteId = null, tagCtxTagName = null;
 let sbCtxTarget = null, sbCtxType = null;
-let mtgStream = null, mtgTimer = null, mtgSec = 0, mtgTranscript = '';
+// mtg state → _mtg* vars (see meeting recorder section)
 let cpHistory = [];
 let modalCb = null;
 let todoTab = 'pending';
@@ -3607,64 +3684,232 @@ function addCPThinking() {
 }
 
 // ═══════════════════════════════════════════════
-// ── MEETING RECORDER ──
 // ═══════════════════════════════════════════════
+// ── MEETING RECORDER — Continuous + Speaker Detection ──
+// ═══════════════════════════════════════════════
+// State
+let _mtgRec       = false;    // is recording?
+let _mtgSR        = null;     // SpeechRecognition instance
+let _mtgTimer     = null;     // clock interval
+let _mtgSec       = 0;        // elapsed seconds
+let _mtgSegments  = [];       // [{speaker, text, timeLabel}]
+let _mtgInterim   = '';       // current interim text
+let _mtgSpeakers  = 0;        // detected speaker count
+let _mtgCurSpk    = 0;        // current speaker index (0-based)
+let _mtgLastEnd   = 0;        // timestamp of last final result
+let _mtgRestartPending = false;
+
+// Speaker colors for badges
+const MTG_COLORS  = ['s0','s1','s2','s3'];
+const MTG_NAMES   = ['Hablante 1','Hablante 2','Hablante 3','Hablante 4'];
+
 function toggleMtgRec() {
-  if(mtgStream) stopMtgRec(); else startMtgRec();
+  if(_mtgRec) stopMtgRec(); else startMtgRec();
 }
+
 function startMtgRec() {
-  if(!('webkitSpeechRecognition' in window||'SpeechRecognition' in window)) { toast('Reconocimiento de voz no disponible en este navegador'); return; }
-  const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
-  mtgStream=new SR(); mtgStream.continuous=true; mtgStream.interimResults=true; mtgStream.lang='es-PE';
-  mtgStream.onresult=e=>{
-    let interim='';
-    for(let i=e.resultIndex;i<e.results.length;i++){
-      if(e.results[i].isFinal) mtgTranscript+=e.results[i][0].transcript+' ';
-      else interim+=e.results[i][0].transcript;
-    }
-    document.getElementById('mtg-transcript-box').textContent=mtgTranscript+interim;
-  };
-  mtgStream.start();
-  document.getElementById('mtg-rec-btn').textContent='⏹ Detener';
+  if(!('webkitSpeechRecognition' in window||'SpeechRecognition' in window)) {
+    toast('Reconocimiento de voz no disponible — usa Chrome'); return;
+  }
+  _mtgRec = true;
+  _mtgSec = 0;
+  _mtgLastEnd = Date.now();
+  document.getElementById('mtg-rec-btn').innerHTML = '⏹ Detener';
   document.getElementById('mtg-rec-btn').classList.replace('rec','stop');
-  mtgSec=0;
-  mtgTimer=setInterval(()=>{
-    mtgSec++;
-    const m=Math.floor(mtgSec/60),s=mtgSec%60;
-    document.getElementById('mtg-timer').textContent=m+':'+(s<10?'0':'')+s;
-  },1000);
+  document.getElementById('mtg-rec-indicator').style.display = 'block';
+  _mtgTimer = setInterval(() => {
+    _mtgSec++;
+    const m = Math.floor(_mtgSec/60), s = _mtgSec%60;
+    document.getElementById('mtg-timer').textContent = m+':'+(s<10?'0':'')+s;
+  }, 1000);
+  _mtgStartSR();
 }
+
+function _mtgStartSR() {
+  if(!_mtgRec) return;
+  const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+  _mtgSR = new SR();
+  _mtgSR.continuous      = true;
+  _mtgSR.interimResults  = true;
+  _mtgSR.lang            = 'es-PE';
+  _mtgSR.maxAlternatives = 1;
+
+  _mtgSR.onresult = e => {
+    _mtgInterim = '';
+    for(let i = e.resultIndex; i < e.results.length; i++) {
+      const txt = e.results[i][0].transcript;
+      if(e.results[i].isFinal) {
+        // ── Speaker change detection via pause length ──
+        const now = Date.now();
+        const pauseMs = now - _mtgLastEnd;
+        _mtgLastEnd = now;
+        // Pause > 2000ms = likely new speaker
+        if(_mtgSegments.length > 0 && pauseMs > 2000) {
+          // Rotate speaker
+          _mtgCurSpk = (_mtgCurSpk + 1) % 4;
+          if(_mtgCurSpk + 1 > _mtgSpeakers) _mtgSpeakers = _mtgCurSpk + 1;
+        } else if(_mtgSegments.length === 0) {
+          _mtgSpeakers = 1;
+        }
+        // Append to last segment if same speaker, else new segment
+        const m = Math.floor(_mtgSec/60), s = _mtgSec%60;
+        const timeLabel = m+':'+(s<10?'0':'')+s;
+        const lastSeg = _mtgSegments[_mtgSegments.length-1];
+        if(lastSeg && lastSeg.speaker === _mtgCurSpk && pauseMs < 2000) {
+          lastSeg.text += ' ' + txt.trim();
+        } else {
+          _mtgSegments.push({ speaker: _mtgCurSpk, text: txt.trim(), timeLabel });
+        }
+        _mtgInterim = '';
+        _mtgRenderTranscript();
+        _mtgUpdateSpeakers();
+      } else {
+        _mtgInterim += txt;
+        _mtgRenderInterim();
+      }
+    }
+  };
+
+  _mtgSR.onerror = e => {
+    // 'no-speech' is normal — just restart
+    if(e.error === 'no-speech' || e.error === 'audio-capture') {
+      if(_mtgRec) setTimeout(_mtgStartSR, 300);
+    } else if(e.error === 'not-allowed') {
+      toast('Permiso de micrófono denegado');
+      stopMtgRec();
+    }
+  };
+
+  _mtgSR.onend = () => {
+    // Auto-restart to bypass browser 60s limit
+    if(_mtgRec && !_mtgRestartPending) {
+      _mtgRestartPending = true;
+      setTimeout(() => {
+        _mtgRestartPending = false;
+        _mtgStartSR();
+      }, 200);
+    }
+  };
+
+  try { _mtgSR.start(); } catch(e) { /* already running */ }
+}
+
 function stopMtgRec() {
-  if(mtgStream){ mtgStream.stop(); mtgStream=null; }
-  clearInterval(mtgTimer);
-  document.getElementById('mtg-rec-btn').textContent='⏺ Grabar';
+  _mtgRec = false;
+  _mtgRestartPending = false;
+  if(_mtgSR) { try { _mtgSR.stop(); } catch(e){} _mtgSR = null; }
+  clearInterval(_mtgTimer);
+  document.getElementById('mtg-rec-btn').innerHTML = '⏺ Grabar';
   document.getElementById('mtg-rec-btn').classList.replace('stop','rec');
+  document.getElementById('mtg-rec-indicator').style.display = 'none';
+  _mtgInterim = '';
+  _mtgRenderTranscript();
 }
+
+function _mtgRenderTranscript() {
+  const box = document.getElementById('mtg-transcript-box');
+  if(!_mtgSegments.length && !_mtgInterim) {
+    box.innerHTML = '<span style="color:var(--t3);font-style:italic;font-size:12px">La transcripción aparecerá aquí mientras grabas…<br><br>💡 Tip: la grabación continúa sin límite. Pausas largas detectan cambio de hablante.</span>';
+    return;
+  }
+  let html = _mtgSegments.map(seg => `
+    <div class="mtg-seg">
+      <div class="mtg-seg-speaker ${MTG_COLORS[seg.speaker % 4]}">${MTG_NAMES[seg.speaker % 4]}</div>
+      <div class="mtg-seg-text">${hesc(seg.text)}</div>
+      <div class="mtg-seg-time">${seg.timeLabel}</div>
+    </div>
+  `).join('');
+  if(_mtgInterim) html += `<span class="mtg-interim">${hesc(_mtgInterim)}</span>`;
+  box.innerHTML = html;
+  box.scrollTop = box.scrollHeight;
+}
+
+function _mtgRenderInterim() {
+  const box = document.getElementById('mtg-transcript-box');
+  // Update only the interim span without re-rendering all segments
+  let interim = box.querySelector('.mtg-interim');
+  if(!interim) {
+    interim = document.createElement('span');
+    interim.className = 'mtg-interim';
+    box.appendChild(interim);
+  }
+  interim.textContent = _mtgInterim;
+  box.scrollTop = box.scrollHeight;
+}
+
+function _mtgUpdateSpeakers() {
+  const row = document.getElementById('mtg-speakers-row');
+  if(_mtgSpeakers < 2) { row.innerHTML = ''; return; }
+  row.innerHTML = Array.from({length:_mtgSpeakers}, (_,i) =>
+    `<span class="mtg-speaker-badge ${MTG_COLORS[i]}">${MTG_NAMES[i]}</span>`
+  ).join('');
+}
+
+function _mtgGetPlainTranscript() {
+  return _mtgSegments.map(seg =>
+    MTG_NAMES[seg.speaker % 4] + ' [' + seg.timeLabel + ']: ' + seg.text
+  ).join('\n\n');
+}
+
 async function mtgSummarize() {
-  if(!mtgTranscript.trim()){ toast('No hay transcripción'); return; }
-  const box=document.getElementById('mtg-transcript-box');
-  const orig=box.textContent; box.textContent='Resumiendo con Claude…';
+  const txt = _mtgGetPlainTranscript();
+  if(!txt.trim()){ toast('No hay transcripción'); return; }
+  const box = document.getElementById('mtg-transcript-box');
+  const prevHTML = box.innerHTML;
+  box.innerHTML = '<span style="color:var(--t3);font-style:italic;font-size:12px">✦ Resumiendo con Claude…</span>';
   try {
-    const res=await fetch('https://api.anthropic.com/v1/messages',{
+    const res = await fetch('https://api.anthropic.com/v1/messages',{
       method:'POST', headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:800,
-        system:'Eres un asistente para reuniones. Responde siempre en español.',
-        messages:[{role:'user',content:`Resume esta transcripción de reunión de forma clara y estructurada, con acuerdos y próximos pasos:\n\n${mtgTranscript}`}]})
+      body: JSON.stringify({
+        model: 'claude-sonnet-4-20250514', max_tokens: 1200,
+        system: 'Eres un asistente para reuniones de trabajo. Siempre respondes en español, en formato claro y estructurado.',
+        messages:[{role:'user', content:
+          `Analiza esta transcripción de reunión e identifica quiénes hablan (${_mtgSpeakers} hablante${_mtgSpeakers>1?'s':''}).
+
+Genera:
+1. **Resumen ejecutivo** (2-3 oraciones)
+2. **Puntos discutidos** por tema
+3. **Acuerdos y decisiones tomadas**
+4. **Próximos pasos** con responsable si se menciona
+
+Transcripción:
+
+${txt}`
+        }]
+      })
     });
-    const data=await res.json();
-    box.textContent=data.content?.[0]?.text||orig;
-  } catch(e){ box.textContent=orig; toast('Error al resumir'); }
+    const data = await res.json();
+    const summary = data.content?.[0]?.text;
+    if(summary) {
+      box.innerHTML = '<div style="font-size:12px;line-height:1.7;color:var(--text);white-space:pre-wrap">' + hesc(summary) + '</div>';
+    } else { box.innerHTML = prevHTML; }
+  } catch(e) { box.innerHTML = prevHTML; toast('Error al resumir'); }
 }
+
 function mtgInsertToNote() {
-  if(!mtgTranscript.trim()){ toast('No hay transcripción'); return; }
+  const txt = _mtgGetPlainTranscript();
+  if(!txt.trim()){ toast('No hay transcripción'); return; }
   if(!activeId){ toast('Abre una nota primero'); return; }
-  const html=`<div class="meeting-block"><h3>🎙 Transcripción — ${D()}</h3><p>${hesc(mtgTranscript).replace(/\n/g,'<br>')}</p></div><p><br></p>`;
-  const le=document.getElementById('le'); le.focus();
-  document.execCommand('insertHTML',false,html);
-  schedSave(); toast('📥 Transcripción insertada');
-  mtgTranscript='';
-  document.getElementById('mtg-transcript-box').innerHTML='<span style="color:var(--t3);font-style:italic">La transcripción aparecerá aquí mientras grabas…</span>';
-  document.getElementById('mtg-timer').textContent='0:00';
+  // Build rich HTML with speaker segments
+  const segsHtml = _mtgSegments.map(seg =>
+    `<p><strong style="color:var(--accent);font-size:11px">${MTG_NAMES[seg.speaker % 4]}</strong> <span style="color:var(--t3);font-size:10px">[${seg.timeLabel}]</span><br>${hesc(seg.text)}</p>`
+  ).join('');
+  const html = `<div class="meeting-block"><h3>🎙 Transcripción — ${D()} · ${Math.floor(_mtgSec/60)}min</h3>${segsHtml}</div><p><br></p>`;
+  const le = document.getElementById('le'); le.focus();
+  document.execCommand('insertHTML', false, html);
+  schedSave(); toast('📥 Transcripción insertada en la nota');
+  mtgClear();
+}
+
+function mtgClear() {
+  _mtgSegments = [];
+  _mtgInterim = '';
+  _mtgSpeakers = 0;
+  _mtgCurSpk = 0;
+  _mtgSec = 0;
+  document.getElementById('mtg-timer').textContent = '0:00';
+  document.getElementById('mtg-speakers-row').innerHTML = '';
+  _mtgRenderTranscript();
 }
 
 // ═══════════════════════════════════════════════
