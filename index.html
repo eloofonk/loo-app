@@ -12,20 +12,21 @@
    Clean, editorial, warm. Georgia for reading, system UI for chrome.
 ═══════════════════════════════════════════════════════════════ */
 :root {
-  --bg:        #ffffff;
+  --bg:        #f5f3ec;
   --surface:   #ffffff;
-  --s2:        #fafafa;
-  --s3:        #f5f5f7;
+  --s2:        #ebe9d6;
+  --s3:        #e4e2ce;
   --border:    rgba(0,0,0,.08);
   --border2:   rgba(0,0,0,.14);
-  --text:      #1d1d1f;
-  --t2:        #424245;
-  --t3:        #86868b;
-  --accent:    #0071e3;
-  --a-bg:      #e8f0fd;
-  --a-hover:   #d2e4fb;
-  --hl:        #fde047;          /* neon yellow highlight */
-  --txt-blue:  #1d4ed8;
+  --text:      #111111;
+  --t2:        #333333;
+  --t3:        #888880;
+  --accent:    #1D3EC1;
+  --a-bg:      rgba(29,62,193,.10);
+  --a-hover:   rgba(29,62,193,.18);
+  --hl:        #B8FB3C;          /* neon green highlight */
+  --note-bg:   #F1EFD8;          /* nota background */
+  --txt-blue:  #1D3EC1;
   --txt-red:   #dc2626;
   --shadow:    0 1px 3px rgba(0,0,0,.04), 0 4px 16px rgba(0,0,0,.06);
   --shadow-lg: 0 8px 36px rgba(0,0,0,.10);
@@ -404,14 +405,15 @@ input, textarea, select { font-family: var(--ui) }
 .lw { flex: 1; overflow-y: auto; padding: 0 28px 60px; position: relative }
 .line-numbers { position: absolute; left: 0; top: 0; width: 36px; padding: 0 6px 0 4px; text-align: right; font-size: 11px; color: var(--t3); font-family: 'Courier New', monospace; pointer-events: none; line-height: 1.8; display: none }
 .le {
+  background: var(--note-bg);
   outline: none;
   min-height: 100%;
   padding: 20px 0;
   line-height: 1.9;
-  font-size: 16px;
+  font-size: 14px;
   color: var(--text);
   font-family: var(--font);
-  max-width: 680px;
+  max-width: none;
 }
 .le h1  { font-size: 26px; font-weight: 700; margin: 24px 0 8px; line-height: 1.2; font-family: var(--font); color: var(--text) }
 .le h2  { font-size: 20px; font-weight: 700; margin: 18px 0 6px; line-height: 1.3; font-family: var(--font) }
@@ -451,7 +453,9 @@ input, textarea, select { font-family: var(--ui) }
 .le .warn-block { background: #fffbeb; border: 1px solid #fde68a; border-radius: 6px; padding: 10px 14px; margin: 8px 0; font-size: 14px }
 
 /* SUPERTAG BLOCK */
-.stag-block   { border-left: 2px solid var(--accent); background: var(--a-bg); border-radius: 0 6px 6px 0; padding: 10px 16px; margin: 10px 0; outline: none; position: relative; min-height: 36px; display: block }
+.stag-block   { border-left: 3px solid var(--accent); background: var(--a-bg); border-radius: 0 6px 6px 0; padding: 10px 16px; margin: 10px 0; outline: none; position: relative; min-height: 36px; display: block; color: var(--text) }
+/* Suppress highlight colors inside supertag blocks */
+.stag-block span[style*="background-color"] { background-color: transparent !important }
 .stag-block:focus { box-shadow: 0 0 0 2px var(--a-hover) }
 .stag-block::before { content: '✱'; position: absolute; left: -14px; top: 10px; color: var(--accent); font-size: 11px; font-weight: 700 }
 .stag-block:empty::after { content: 'Escribe tu nota destacada…'; color: var(--t3); font-style: italic; pointer-events: none }
@@ -501,7 +505,7 @@ input, textarea, select { font-family: var(--ui) }
 .img-ab-btn:hover { background: rgba(255,255,255,.2) }
 
 /* ── COMMENTS ── */
-.note-comment { background: rgba(253,224,71,.3); border-bottom: 2px solid var(--hl); cursor: pointer; position: relative; border-radius: 2px }
+.note-comment { background: rgba(184,251,60,.25); border-bottom: 2px solid var(--hl); cursor: pointer; position: relative; border-radius: 2px }
 .note-comment:hover::after {
   content: attr(data-comment);
   position: absolute; bottom: calc(100% + 6px); left: 0;
@@ -770,7 +774,7 @@ input, textarea, select { font-family: var(--ui) }
       <input type="checkbox" id="auth-remember" style="accent-color:var(--accent);width:14px;height:14px;cursor:pointer" checked>
       <label for="auth-remember" style="font-size:12px;color:var(--t2);cursor:pointer">Recordarme en este dispositivo</label>
     </div>
-    <button id="auth-btn" onclick="authSubmit()" style="width:100%;padding:11px;background:var(--accent);color:#fff;border:none;border-radius:8px;font-family:var(--font);font-size:14px;font-weight:600;cursor:pointer;transition:opacity .1s">Iniciar sesión</button>
+    <button id="auth-btn" onclick="authSubmit()" style="width:100%;padding:11px;background:var(--accent);color:#ffffff;border:none;border-radius:8px;font-family:var(--font);font-size:14px;font-weight:600;cursor:pointer;transition:opacity .1s">Iniciar sesión</button>
     <div style="margin-top:16px;text-align:center">
       <button onclick="authForgot()" style="font-size:12px;color:var(--t3);border:none;background:none;cursor:pointer;text-decoration:underline">¿Olvidaste tu contraseña?</button>
     </div>
@@ -914,20 +918,14 @@ input, textarea, select { font-family: var(--ui) }
                 <!-- Highlight + text colors -->
                 <div class="rib-clr-group">
                   <div class="rib-clr-row">
-                    <button class="rb2 fmt" onclick="hl()" title="Resaltar">
-                      <span class="rb2-ico"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 3H5a2 2 0 0 0-2 2v4m6-6h10a2 2 0 0 1 2 2v4M9 3v18m0 0h10a2 2 0 0 0 2-2v-4M9 21H5a2 2 0 0 1-2-2v-4m0 0h18" stroke="none"/><path d="m14 8-4 4 4 4"/><rect x="3" y="14" width="18" height="3" rx="1" fill="var(--hl)" stroke="none"/><path d="M9 7l6 10" stroke-width="2.5" stroke="var(--text)"/><path d="M15 7L9 17" stroke-width="2.5" stroke="var(--text)"/></svg></span>
+                    <button class="rb2 fmt" onclick="hl()" title="Resaltar con #B8FB3C">
+                      <span class="rb2-ico" style="width:22px;height:22px;border-radius:4px;background:#B8FB3C;border:1.5px solid rgba(0,0,0,.15)"></span>
                       <span class="rb2-lbl">Resaltar</span>
                     </button>
-                    <button class="rb2 fmt" onclick="hl('transparent')" title="Quitar resaltado" style="font-size:11px;min-width:28px">
+                    <button class="rb2 fmt" onclick="hl('transparent')" title="Quitar resaltado" style="min-width:28px">
                       <span class="rb2-ico"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></span>
-                      <span class="rb2-lbl">Sin resaltado</span>
+                      <span class="rb2-lbl">Quitar</span>
                     </button>
-                  </div>
-                  <div class="rib-clr-row" style="margin-top:3px">
-                    <div class="rib-clr-dot" style="background:#1d1d1f" onclick="clrTxt('#1d1d1f')" title="Negro"></div>
-                    <div class="rib-clr-dot" style="background:#1a56db" onclick="clrTxt('#1a56db')" title="Azul"></div>
-                    <div class="rib-clr-dot" style="background:#c0392b" onclick="clrTxt('#c0392b')" title="Rojo"></div>
-                    <div class="rib-clr-dot rib-clr-x" onclick="document.execCommand('removeFormat')" title="Quitar color">✕</div>
                   </div>
                 </div>
               </div>
@@ -1395,20 +1393,17 @@ input, textarea, select { font-family: var(--ui) }
 
 <!-- FLOATING CTX TOOLBAR -->
 <div class="ctx" id="ctx" onmousedown="event.preventDefault()">
-  <button class="cx" onclick="ef('bold')"><strong>N</strong></button>
-  <button class="cx" onclick="ef('italic')"><em>I</em></button>
-  <button class="cx" onclick="ef('underline')" style="text-decoration:underline">S</button>
-  <button class="cx" onclick="ef('strikeThrough')"><s>S</s></button>
+  <button class="cx" onclick="ef('bold')" title="Negrita"><strong>N</strong></button>
+  <button class="cx" onclick="ef('italic')" title="Cursiva"><em>I</em></button>
+  <button class="cx" onclick="ef('underline')" title="Subrayado" style="text-decoration:underline">S</button>
+  <button class="cx" onclick="ef('strikeThrough')" title="Tachado"><s>S</s></button>
   <div class="cx-sep"></div>
   <div class="cx-clrs">
-    <div class="clr-dot" style="background:var(--hl)" onclick="hl()" title="Resaltar"></div>
-    <div class="clr-dot" style="background:#1c1c1e" onclick="clrTxt('#1c1c1e')" title="Negro"></div>
-    <div class="clr-dot" style="background:var(--txt-blue)" onclick="clrTxt('#1d4ed8')" title="Azul"></div>
-    <div class="clr-dot" style="background:var(--txt-red)" onclick="clrTxt('#dc2626')" title="Rojo"></div>
-    <div class="clr-dot" style="background:transparent;border:1px solid var(--border2);font-size:8px;display:flex;align-items:center;justify-content:center;border-radius:50%;width:14px;height:14px" onclick="document.execCommand('removeFormat');closeCtx()" title="Quitar">✕</div>
+    <div class="clr-dot" style="background:#B8FB3C;border:1.5px solid rgba(0,0,0,.15)" onclick="hl()" title="Resaltar"></div>
+    <div class="clr-dot" style="background:transparent;border:1.5px solid var(--border2);font-size:8px;display:flex;align-items:center;justify-content:center;border-radius:50%;width:14px;height:14px" onclick="hl('transparent');closeCtx()" title="Quitar resaltado">✕</div>
   </div>
   <div class="cx-sep"></div>
-  <button class="cx" onclick="makeSupertag()" title="Convertir en supertag">✱</button>
+  <button class="cx" onclick="makeSupertag()" title="Supertag">✱</button>
   <button class="cx" onclick="ctxWL()" title="Enlazar nota">⟦⟧</button>
   <button class="cx" onclick="ef('removeFormat')" title="Quitar formato">✕</button>
 </div>
@@ -1991,7 +1986,7 @@ function ef(cmd) {
 function hl(color) {
   restoreSelection();
   const c = (color === undefined)
-    ? (getComputedStyle(document.documentElement).getPropertyValue('--hl').trim() || '#fde047')
+    ? (getComputedStyle(document.documentElement).getPropertyValue('--hl').trim() || '#B8FB3C')
     : color;
   document.execCommand('hiliteColor', false, c);
   schedSave(); closeCtx();
@@ -3092,12 +3087,9 @@ function openRCMenu(e) {
     <div class="rc-item" onmousedown="event.preventDefault();ef('italic');closeRCMenu()"><em style="font-size:13px">I</em>&nbsp; Cursiva</div>
     <div class="rc-item" onmousedown="event.preventDefault();ef('underline');closeRCMenu()"><span style='text-decoration:underline'>S</span>&nbsp; Subrayado</div>
     <div class="rc-item" onmousedown="event.preventDefault();ef('strikeThrough');closeRCMenu()"><s>S</s>&nbsp; Tachado</div>
-    <div style="padding:5px 12px 3px;display:flex;gap:7px;align-items:center">
-      <div style="width:20px;height:13px;border-radius:3px;background:var(--hl);cursor:pointer;border:1.5px solid rgba(0,0,0,.1)" onmousedown="event.preventDefault();hl();closeRCMenu()" title="Resaltar"></div>
-      <div style="width:14px;height:14px;border-radius:50%;background:#1d1d1f;cursor:pointer" onmousedown="event.preventDefault();clrTxt('#1d1d1f');closeRCMenu()" title="Negro"></div>
-      <div style="width:14px;height:14px;border-radius:50%;background:#1a56db;cursor:pointer" onmousedown="event.preventDefault();clrTxt('#1a56db');closeRCMenu()" title="Azul"></div>
-      <div style="width:14px;height:14px;border-radius:50%;background:#c0392b;cursor:pointer" onmousedown="event.preventDefault();clrTxt('#c0392b');closeRCMenu()" title="Rojo"></div>
-      <div style="width:14px;height:14px;border-radius:50%;background:transparent;border:1.5px solid var(--border2);cursor:pointer;font-size:8px;display:flex;align-items:center;justify-content:center;color:var(--t3)" onmousedown="event.preventDefault();document.execCommand('removeFormat');closeRCMenu()" title="Quitar formato">✕</div>
+    <div style="padding:5px 12px 3px;display:flex;gap:8px;align-items:center">
+      <div style="width:22px;height:14px;border-radius:4px;background:#B8FB3C;cursor:pointer;border:1.5px solid rgba(0,0,0,.15)" onmousedown="event.preventDefault();hl();closeRCMenu()" title="Resaltar"></div>
+      <div style="width:14px;height:14px;border-radius:50%;background:transparent;border:1.5px solid var(--border2);cursor:pointer;font-size:8px;display:flex;align-items:center;justify-content:center;color:var(--t3)" onmousedown="event.preventDefault();hl('transparent');closeRCMenu()" title="Quitar resaltado">✕</div>
     </div>
     <div class="rc-sep"></div>
     <div class="rc-item" onmousedown="event.preventDefault();document.execCommand('copy');closeRCMenu()">Copiar</div>
@@ -3206,13 +3198,43 @@ function deleteComment(cid) {
 function showBlockCtxMenu(x, y, label, el) {
   let m=document.getElementById('block-ctx-menu');
   if(!m){ m=document.createElement('div'); m.id='block-ctx-menu'; document.body.appendChild(m); }
-  m.style.cssText=`position:fixed;z-index:700;background:var(--surface);border:1px solid var(--border);border-radius:8px;box-shadow:var(--shadow-lg);padding:4px;min-width:180px;animation:fadeUp .12s ease`;
+  m.style.cssText=`position:fixed;z-index:700;background:var(--surface);border:1px solid var(--border);border-radius:10px;box-shadow:var(--shadow-lg);padding:4px;min-width:190px;animation:fadeUp .12s ease`;
+  const isStag = el && el.classList.contains('stag-block');
+  const stagOpt = isStag ? `<div onclick="convertStagToP()" style="padding:6px 10px;border-radius:5px;cursor:pointer;font-size:12px;color:var(--text);display:flex;align-items:center;gap:6px" onmouseover="this.style.background='var(--s3)'" onmouseout="this.style.background=''">↩ Convertir a párrafo</div>` : '';
   m.innerHTML=`<div style="font-size:10px;font-weight:700;color:var(--t3);padding:4px 8px 2px;text-transform:uppercase">${label}</div>
-    <div onclick="deleteBlock()" style="padding:6px 10px;border-radius:5px;cursor:pointer;font-size:12px;color:#dc2626;display:flex;align-items:center;gap:6px" onmouseover="this.style.background='#fee2e2'" onmouseout="this.style.background=''">🗑 Eliminar bloque</div>`;
-  m.style.left=Math.min(x,window.innerWidth-190)+'px';
-  m.style.top=Math.min(y,window.innerHeight-100)+'px';
+    ${stagOpt}
+    <div onclick="deleteBlock()" style="padding:6px 10px;border-radius:5px;cursor:pointer;font-size:12px;color:#dc2626;display:flex;align-items:center;gap:6px" onmouseover="this.style.background='var(--s3)'" onmouseout="this.style.background=''">🗑 Eliminar bloque</div>`;
+  m.style.left=Math.min(x,window.innerWidth-200)+'px';
+  m.style.top=Math.min(y,window.innerHeight-120)+'px';
   blockCtxEl=el;
   setTimeout(()=>document.addEventListener('mousedown',closeBlockCtx,{once:true}),10);
+}
+function convertStagToP() {
+  if(!blockCtxEl || !blockCtxEl.isConnected) { closeBlockCtx(); return; }
+  const stag = blockCtxEl;
+  const p = document.createElement('p');
+  p.innerHTML = stag.innerHTML;
+  // Strip any background-color inline styles from all children
+  p.querySelectorAll('[style]').forEach(el => {
+    el.style.backgroundColor = '';
+    el.style.background = '';
+    if (!el.getAttribute('style').trim()) el.removeAttribute('style');
+  });
+  // Also strip background from text nodes wrapped in spans
+  p.querySelectorAll('span').forEach(span => {
+    span.style.backgroundColor = '';
+    span.style.background = '';
+    if (!span.getAttribute('style') || !span.getAttribute('style').trim()) {
+      // Unwrap the span if it has no remaining styles
+      const parent = span.parentNode;
+      while (span.firstChild) parent.insertBefore(span.firstChild, span);
+      parent.removeChild(span);
+    }
+  });
+  stag.replaceWith(p);
+  closeBlockCtx();
+  schedSave();
+  toast('Supertag convertido a párrafo');
 }
 let blockCtxEl=null;
 function deleteBlock() { if(blockCtxEl&&blockCtxEl.isConnected){ blockCtxEl.remove(); schedSave(); toast('Bloque eliminado'); } closeBlockCtx(); }
